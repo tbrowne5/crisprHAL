@@ -160,12 +160,15 @@ def main(fileoutput="NULL", compare=False, model="Tev", seqstart=10, seqend=38, 
         write_prediction(input_pred, input_data, fileoutput)
 
 compare=False
-modelname=str(sys.argv[1])
+if len(sys.argv) > 1: modelname=str(sys.argv[1])
+else: modelname="Tev"
+
 if len(sys.argv) > 2: indata=str(sys.argv[2])
 else:
     print("Running model with an example SpCas9 dataset of 7821 sgRNAs from Guo et al. 2018")
     indata="test_dataset.csv"
     compare=True
+
 if len(sys.argv) > 3:
     if "compare" in str(sys.argv[3]) or "Compare" in str(sys.argv[3]): compare=True
 outfile="Output_" + indata
