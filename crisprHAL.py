@@ -54,10 +54,9 @@ def formatinputs(dataframe_input):
 
 
 def get_ttsplit (data,ttsplitstate=1,tst_size=0.2,return_pre_format_values=False,prediction=False):
-    dataset = p.read_csv(data, skiprows=0,).dropna(how="all")
+    dataset = p.read_csv(data, header=None, skiprows=0,).dropna(how="all")
     if prediction: dataset['scores'] = 0
     nparray = dataset.to_numpy()
-    print(nparray.shape)
     nparray = nparray[1:]
     if tst_size==0:
         df_all = p.DataFrame(data=nparray[:,1:],index=nparray[:,0])
@@ -119,8 +118,11 @@ def main(fileoutput="NULL", compare=False, model="Tev", seqstart=10, seqend=38, 
     drd2 = Dropout(CNN_drop, name="drd2")(ld2)
     x_1d_o = k.layers.Dense(1, name="x_1d_o")(drd2)
 
+    # Bidirectional Gated Recurrent Unit Branch
     r1 = k.layers.Bidirectional(k.layers.GRU(RNN_size, kernel_initializer='he_normal', dropout=drop_rate, recurrent_dropout=0.2), name="r1")(dr1) #dr1_LSTM) #LSTM(64,activation=None,dropout=0.3,recurrent_dropout=0.2)(dr1_LSTM) #dr1_LSTM)
+    
     f_LSTM = k.layers.Flatten(name="f_LSTM")(r1)
+    
     d1_LSTM = k.layers.Dense(RNN_dense1, name="d1_LSTM")(f_LSTM)
     ld1_LSTM = k.layers.LeakyReLU(name="ld1_LSTM")(d1_LSTM)
     drd1_LSTM = Dropout(CNN_RNN_drop, name="drd1_LSTM")(ld1_LSTM)
@@ -163,6 +165,7 @@ if len(sys.argv) > 2: indata=str(sys.argv[2])
 else:
     print("Running model with an example SpCas9 dataset of 7821 sgRNAs from Guo et al. 2018")
     indata="test_dataset.csv"
+    compare=True
 if len(sys.argv) > 3:
     if "compare" in str(sys.argv[3]) or "Compare" in str(sys.argv[3]): compare=True
 outfile="Output_" + indata
