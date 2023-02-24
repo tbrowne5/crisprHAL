@@ -141,9 +141,9 @@ def main(fileoutput="NULL", compare=False, model="Tev", seqstart=10, seqend=38, 
     m.compile(**compile_options)
 
     if "Tev" in model or "tev" in model:
-        m = k.models.load_model("/Volumes/bin/CrisprHAL_prediction_h5s/CrisprHAL_predictions/tlrn_mergestart_Tev_std_72_1_1_CrisprHAL_stdev_eSpTev_HH_128_128_128_64_branch_10_to_38_eSp_stdev_scaled_43_UniqCas9_43_unscaled_difference_Tev_stdev_scaled_43_4_allData.h5")
+        m = k.models.load_model("TevSpCas9.h5")
     elif ("SpCas9" in model or "Cas9" in model or "cas9" in model) and "Tev" not in model and "eSpCas9" not in model:
-        m = k.models.load_model("/Volumes/bin/CrisprHAL_prediction_h5s/CrisprHAL_predictions/tlrn_mergestart_pTCas_s_56_1_1_CrisprHAL_stdev_eSppTCas_F_128_128_128_64_branch_10_to_38_eSp_stdev_scaled_43_UniqCas9_43_unscaled_difference_pTCas_stdev_scaled_43_6_allData.h5")
+        m = k.models.load_model("SpCas9.h5")
     else:
         print("No correct model specified, please choose either: TevSpCas9 or SpCas9")
         return
