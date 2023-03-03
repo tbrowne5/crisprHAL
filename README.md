@@ -39,7 +39,10 @@ Optional Compare: "Compare" if your CSV file contains activity scores for compar
 • 5 nucleotides downstream, ie: 
 • Total: CTCGATTGAGGGGCTGGGAATGGGTGAT
 
-Example Input CSV File -- Prediction Only, No "Compare" Option:
+Example Command and Input CSV File -- Prediction Only, No "Compare" Option:
+```
+python crisprHAL.py TevSpCas9 sgRNAsequences.csv
+```
 ```
 sgRNA
 ATGCATATCCCTCTTATTGCCGGTCGCG
@@ -54,7 +57,10 @@ CAGGAAACGGCTAACAGAACCGGACCAA
 GTGGCAATCGTCGTTTTAACCGGCAAAC
 ```
 
-Example Input CSV File -- "Compare" option to compare to other activity scores:
+Example Command and Input CSV File -- "Compare" option to compare to other activity scores:
+```
+python crisprHAL.py SpCas9 sgRNAsequences.csv Compare
+```
 ```
 sgRNA,score
 CTCGATTGAGGGGCTGGGAATGGGTGAT,8.21062788839
