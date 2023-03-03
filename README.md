@@ -41,7 +41,7 @@ Optional Compare: "Compare" if your CSV file contains activity scores for compar
 
 Example Command and Input CSV File -- Prediction Only, No "Compare" Option:
 ```
-python crisprHAL.py TevSpCas9 sgRNAsequences.csv
+python crisprHAL.py TevSpCas9 test_dataset.csv
 ```
 ```
 sgRNA
@@ -59,7 +59,7 @@ GTGGCAATCGTCGTTTTAACCGGCAAAC
 
 Example Command and Input CSV File -- "Compare" option to compare to other activity scores:
 ```
-python crisprHAL.py SpCas9 sgRNAsequences.csv Compare
+python crisprHAL.py SpCas9 test_dataset.csv Compare
 ```
 ```
 sgRNA,score
