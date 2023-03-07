@@ -17,17 +17,26 @@ scipy==1.6.1
 tensorflow==2.4.0
 ```
 
-# Run Model Test:
+# 1: Run Model Test:
 ```
 python crisprHAL.py
 ```
 
-# Process nucleotide sequence(s) into sgRNA target model inputs:
+
+# 2: Process nucleotide sequence(s) into sgRNA target model inputs:
 ```
 python process_inputs.py [Input Nucleotide File]
 ```
 
-Input Nucleotide File: Single line nucleotide input with multiple sequences broken up by ">NAME" lines
+• Input Nucleotide File: Single line nucleotide input with multiple sequences broken up by ">NAME" lines
+• Output: 28 nucleotide sgRNA target site sequences in a CSV file suitable as an input to the model
+
+Composition of the 28 nucleotide inputs:
+• 20 nucleotide target site, ie: CTCGATTGAGGGGCTGGGAA
+• 3 nucleotide NGG PAM, ie: TGG
+• 5 nucleotides downstream, ie: 
+• Total: CTCGATTGAGGGGCTGGGAATGGGTGAT
+
 Example input file shown below:
 ```
 >Sequence1
@@ -38,22 +47,18 @@ CCGACTCGTCCAACATCAATACAACCTATTAATTTCCCCTCGTCAAAAATAAGGTTATCAAGTGAGAAATCACCATGAGT
 CCAGACTCCTGTGTAACATATGCAACCGTTCTAACCCGCTGGGTGAAGACTTTGACTACCGCAAAGAGTTTAGCAAGTTAGACTACTCCGCCCTGAAAGGGGATC
 ```
 
-# Run Model:
+
+# 3: Run Model:
 ```
 python crisprHAL.py [Enzyme] [Input File csv] [Optional Compare]
 ```
 
-Enzyme: "TevSpCas9" or "SpCas9"
+• Enzyme: "TevSpCas9" or "SpCas9"
+• Input: CSV file input name
+• Optional Compare: "Compare" if your CSV file contains activity scores for comparison (Details in Section 4)
+• Output: Tab-deliminated (TSV) file containing the 28 nucleotide sequence and predicted Cas9 activity value
 
-Input: CSV file input name (format shown below)
-
-Optional Compare: "Compare" if your CSV file contains activity scores for comparison (format shown below)
-
-28 nucleotide sgRNA target site input required:
-• 20 nucleotide target site, ie: CTCGATTGAGGGGCTGGGAA
-• 3 nucleotide NGG PAM, ie: TGG
-• 5 nucleotides downstream, ie: 
-• Total: CTCGATTGAGGGGCTGGGAATGGGTGAT
+# 4: Preparing your own input CSV Files:
 
 Example Command and Input CSV File -- Prediction Only, No "Compare" Option:
 ```
