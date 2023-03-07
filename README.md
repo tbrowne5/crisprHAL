@@ -54,7 +54,7 @@ python crisprHAL.py [Enzyme] [Input File csv] [Optional Compare]
 ```
 
 * Enzyme: "TevSpCas9" or "SpCas9"
-* Input: CSV file input name
+* Input: CSV file input name -- Created in section 2 or matching the required format (Details in Section 4)
 * Optional Compare: "Compare" if your CSV file contains activity scores for comparison (Details in Section 4)
 * Output: Tab-deliminated (TSV) file containing the 28 nucleotide sequence and predicted Cas9 activity value
 
