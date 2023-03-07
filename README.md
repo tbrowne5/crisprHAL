@@ -21,6 +21,7 @@ tensorflow==2.4.0
 ```
 python crisprHAL.py
 ```
+Test the model with an example SpCas9 dataset of 7821 unique sgRNA target sites from Guo et al. 2018.
 
 
 # 2: Process nucleotide sequence(s) into sgRNA target model inputs:
