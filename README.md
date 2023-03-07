@@ -30,7 +30,7 @@ python process_inputs.py [Input Nucleotide File]
 ```
 
 * **Input Nucleotide File**: Single line nucleotide input with multiple sequences broken up by ">NAME" lines
-* **Output**: 28 nucleotide sgRNA target site sequences in a CSV file suitable as an input to the model
+* **Output**: 28 nucleotide sequences in a CSV file appropriate as an input to the model
 
 Composition of the 28 nucleotide inputs:
 * 20 nucleotide target site, ie: CTCGATTGAGGGGCTGGGAA
