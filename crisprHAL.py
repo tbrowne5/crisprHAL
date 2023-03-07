@@ -141,9 +141,9 @@ def main(fileoutput="NULL", compare=False, model="Tev", seqstart=10, seqend=38, 
     m.compile(**compile_options)
 
     if "Tev" in model or "tev" in model:
-        m = k.models.load_model("TevSpCas9.h5")
+        m = k.models.load_model("h5/TevSpCas9.h5")
     elif ("SpCas9" in model or "Cas9" in model or "cas9" in model) and "Tev" not in model and "eSpCas9" not in model:
-        m = k.models.load_model("SpCas9.h5")
+        m = k.models.load_model("h5/SpCas9.h5")
     else:
         print("No correct model specified, please choose either: TevSpCas9 or SpCas9")
         return
