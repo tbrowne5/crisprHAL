@@ -32,6 +32,7 @@ python process_inputs.py [Input Nucleotide File]
 • Output: 28 nucleotide sgRNA target site sequences in a CSV file suitable as an input to the model
 
 Composition of the 28 nucleotide inputs:
+
 • 20 nucleotide target site, ie: CTCGATTGAGGGGCTGGGAA
 • 3 nucleotide NGG PAM, ie: TGG
 • 5 nucleotides downstream, ie: 
