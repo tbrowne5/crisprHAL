@@ -28,8 +28,8 @@ python crisprHAL.py
 python process_inputs.py [Input Nucleotide File]
 ```
 
-* Input Nucleotide File: Single line nucleotide input with multiple sequences broken up by ">NAME" lines
-* Output: 28 nucleotide sgRNA target site sequences in a CSV file suitable as an input to the model
+* **Input Nucleotide File**: Single line nucleotide input with multiple sequences broken up by ">NAME" lines
+* **Output**: 28 nucleotide sgRNA target site sequences in a CSV file suitable as an input to the model
 
 Composition of the 28 nucleotide inputs:
 * 20 nucleotide target site, ie: CTCGATTGAGGGGCTGGGAA
@@ -53,10 +53,10 @@ CCAGACTCCTGTGTAACATATGCAACCGTTCTAACCCGCTGGGTGAAGACTTTGACTACCGCAAAGAGTTTAGCAAGTTA
 python crisprHAL.py [Enzyme] [Input File csv] [Optional Compare]
 ```
 
-* Enzyme: "TevSpCas9" or "SpCas9"
-* Input: CSV file input name; created in section 2 or matching the required format (Details in Section 4)
-* Optional Compare: "Compare" if your CSV file contains activity scores for comparison (Details in Section 4)
-* Output: Tab-deliminated (TSV) file containing the 28 nucleotide sequence and predicted Cas9 activity value
+* **Enzyme**: "TevSpCas9" or "SpCas9"
+* **Input**: CSV file input name; created in section 2 or matching the required format (Details in Section 4)
+* **Optional Compare**: "Compare" if your CSV file contains activity scores for comparison (Details in Section 4)
+* **Output**: Tab-deliminated (TSV) file containing the 28 nucleotide sequence and predicted Cas9 activity value
 
 # 4: Preparing your own input CSV Files:
 
