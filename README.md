@@ -49,7 +49,7 @@ CCAGACTCCTGTGTAACATATGCAACCGTTCTAACCCGCTGGGTGAAGACTTTGACTACCGCAAAGAGTTTAGCAAGTTA
 ```
 
 
-# 3: Run Model:
+# 3: Run model:
 ```
 python crisprHAL.py [Enzyme] [Input File csv] [Optional Compare]
 ```
@@ -72,7 +72,7 @@ python crisprHAL.py SpCas9 test_dataset.csv Compare
 
 # 4: Preparing your own input CSV Files:
 
-Input CSV file for predication only, no "Compare" option):
+Input CSV file for predication only, no "Compare" option:
 ```
 sgRNA
 ATGCATATCCCTCTTATTGCCGGTCGCG
@@ -87,7 +87,7 @@ CAGGAAACGGCTAACAGAACCGGACCAA
 GTGGCAATCGTCGTTTTAACCGGCAAAC
 ```
 
-Input CSV file for prediction and comparison of prediction to scores in column 2:
+Input CSV file for prediction and comparison of the predictions to scores in column 2:
 ```
 sgRNA,score
 CTCGATTGAGGGGCTGGGAATGGGTGAT,8.21062788839
