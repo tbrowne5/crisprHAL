@@ -59,12 +59,20 @@ python crisprHAL.py [Enzyme] [Input File csv] [Optional Compare]
 * **Optional Compare**: "Compare" if your CSV file contains activity scores for comparison (Details in Section 4)
 * **Output**: Tab-deliminated (TSV) file containing the 28 nucleotide sequence and predicted Cas9 activity value
 
-# 4: Preparing your own input CSV Files:
-
-Example Command and Input CSV File -- Prediction Only, No "Compare" Option:
+Example command with prediction only (no "Compare Option):
 ```
 python crisprHAL.py TevSpCas9 test_dataset.csv
 ```
+
+Example command with compare option allowing for comparison of predictions to other activity scores:
+```
+python crisprHAL.py SpCas9 test_dataset.csv Compare
+```
+
+
+# 4: Preparing your own input CSV Files:
+
+Input CSV file -- Prediction only (no "Compare" option):
 ```
 sgRNA
 ATGCATATCCCTCTTATTGCCGGTCGCG
@@ -79,10 +87,7 @@ CAGGAAACGGCTAACAGAACCGGACCAA
 GTGGCAATCGTCGTTTTAACCGGCAAAC
 ```
 
-Example Command and Input CSV File -- "Compare" option to compare to other activity scores:
-```
-python crisprHAL.py SpCas9 test_dataset.csv Compare
-```
+EInput CSV file -- Compare Option (second column contains activity scores to compare predictions with):
 ```
 sgRNA,score
 CTCGATTGAGGGGCTGGGAATGGGTGAT,8.21062788839
