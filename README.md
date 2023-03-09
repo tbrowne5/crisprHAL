@@ -17,11 +17,12 @@ scipy==1.6.1
 tensorflow==2.4.0
 ```
 
-# 1: Run Model Test:
+# 1: Run model test:
 ```
 python crisprHAL.py
 ```
-Test the model with an example SpCas9 dataset of 7821 unique sgRNA target sites from Guo et al. 2018.
+Test our TevSpCas9 model with an example SpCas9 dataset of 7821 unique sgRNA target sites from Guo et al. 2018.
+
 
 
 # 2: Process nucleotide sequence(s) into sgRNA target model inputs:
@@ -49,9 +50,9 @@ CCAGACTCCTGTGTAACATATGCAACCGTTCTAACCCGCTGGGTGAAGACTTTGACTACCGCAAAGAGTTTAGCAAGTTA
 ```
 
 
-# 3: Run model:
+# 3: Predict with model:
 ```
-python crisprHAL.py [Enzyme] [Input File csv] [Optional Compare]
+python crisprHAL.py [Enzyme] [Input file csv] [Optional compare]
 ```
 
 * **Enzyme**: "TevSpCas9" or "SpCas9"
@@ -59,14 +60,14 @@ python crisprHAL.py [Enzyme] [Input File csv] [Optional Compare]
 * **Optional Compare**: "Compare" if your CSV file contains scores for comparison to model predictions (Format: Section 4)
 * **Output**: Tab-deliminated (TSV) file containing the 28 nucleotide sequence and predicted Cas9 activity value
 
-Example command with prediction only, no "Compare" option:
+Example command with prediction only, no "compare" option:
 ```
 python crisprHAL.py TevSpCas9 test_dataset.csv
 ```
 
-Example command with prediction and "Compare" option for prediction comparison:
+Example command with prediction and "compare" option for prediction comparison:
 ```
-python crisprHAL.py SpCas9 test_dataset.csv Compare
+python crisprHAL.py SpCas9 test_dataset.csv compare
 ```
 
 
@@ -100,4 +101,21 @@ CGTGATGCAACTGTGTAATGCGGCTGAC,27.8665335936
 GAACATCACCGCCTCACGTCCGGTTTTG,26.3480104838
 TCGATTGAGGGGCTGGGAATGGGTGATC,41.2590972746
 CCGTGTAAGGGAGATTACACAGGCTAAG,4.25926295656
+```
+
+# Addition: Validate the training of the model
+
+Perform 5-fold cross validation with the TevSpCas9 dataset constructed on the eSpCas9 base model:
+```
+python crisprHAL.py train TevSpCas9
+```
+
+Perform 5-fold cross validation with the SpCas9 dataset transfer learning from the eSpCas9 base model:
+```
+python crisprHAL.py train SpCas9
+```
+
+Perform 5-fold cross validation with the eSpCas9 dataset (Guo et al. 2018) used as the base model:
+```
+python crisprHAL.py train eSpCas9
 ```
