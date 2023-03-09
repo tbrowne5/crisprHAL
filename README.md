@@ -38,6 +38,10 @@ Test our TevSpCas9 model with an example SpCas9 dataset of 7821 unique sgRNA tar
 
 
 # 2: Process nucleotide sequence(s) into sgRNA target model inputs:
+
+This will take an input nucleotide fasta file and identify potential sgRNA sequences for evaluation. The output
+will be a .csv file containing the predicted guides. This can be used as input for the prediction step
+
 ```
 python process_inputs.py [Input Nucleotide File]
 ```
@@ -62,7 +66,10 @@ CCAGACTCCTGTGTAACATATGCAACCGTTCTAACCCGCTGGGTGAAGACTTTGACTACCGCAAAGAGTTTAGCAAGTTA
 ```
 
 
-# 3: Predict with model:
+# 3: Predict with model: 
+
+This will take the file of the predicted sgRNA sequences from above and assign a score. Higher scores are better!
+The output a .csv file named OUTPUT_[inputfile] and contains the sgRNA and the score.
 ```
 python crisprHAL.py [Enzyme] [Input file csv] [Optional compare]
 ```
