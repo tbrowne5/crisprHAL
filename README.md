@@ -119,4 +119,4 @@ Perform 80:20 train-test split with the eSpCas9 dataset (Guo et al. 2018) used a
 ```
 python crisprHAL.py train eSpCas9
 ```
-\*Unlike transfer learning tests, an 80% training & 20% test split was used for base model generation.
+\*An 80% training & 20% test split was used for base model generation, and therefore has been included in place of the 5-fold cross validation tests used for the TevSpCas9 and SpCas9 enzyme transfer learning-based models.
