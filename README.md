@@ -73,7 +73,7 @@ python crisprHAL.py SpCas9 test_dataset.csv compare
 
 # 4: Preparing your own input CSV Files:
 
-Input CSV file for predication only, no "Compare" option:
+Input CSV file for prediction only, no "Compare" option:
 ```
 sgRNA
 ATGCATATCCCTCTTATTGCCGGTCGCG
