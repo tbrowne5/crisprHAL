@@ -4,12 +4,12 @@ The CRISPR/Cas9 nuclease from Streptococcus pyogenes SpCas9 can be used with sin
 
 # Sections of this guide:
 
-0: Model requirements
-1: Running the model test
-2: Processing nucleotide sequences into model inputs
-3: Predicting with the model
-4: Preparing your own model input files & comparing predictions
-5: Validating the trained models
+* 0: Model requirements
+* 1: Running the model test
+* 2: Processing nucleotide sequences into model inputs
+* 3: Predicting with the model
+* 4: Preparing your own model input files & comparing predictions
+* 5: Validating the trained models
 
 # 0: Requirements:
 ```
