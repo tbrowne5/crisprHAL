@@ -204,5 +204,5 @@ else:
     print("Beginning the crisprHAL.py model test")
     print("\nRunning the TevSpCas9 model with an example SpCas9 dataset of 7821 sgRNAs from Guo et al. 2018")
     main(inputdata="test_dataset.csv",model="TevSpCas9",fileoutput="Output_TevSpCas9_test_dataset.csv",compare=True,train=False)
-    print("\nRunning the TevSpCas9 model with an example SpCas9 dataset of 7821 sgRNAs from Guo et al. 2018")
+    print("\nRunning the SpCas9 model with an example SpCas9 dataset of 7821 sgRNAs from Guo et al. 2018")
     main(inputdata="test_dataset.csv",model="SpCas9",fileoutput="Output_SpCas9_test_dataset.csv",compare=True,train=False)
