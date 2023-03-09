@@ -13,6 +13,7 @@ Setting up and running the model to predict sgRNA activities:
 Additional information and methods: 
 * 4: Preparing your own model input files & comparing predictions
 * 5: Validating the trained models
+* 6: Citations
 
 # 0: Requirements:
 ```
@@ -139,3 +140,5 @@ Perform 80:20 train-test split with the eSpCas9 dataset (Guo et al. 2018) used a
 python crisprHAL.py train eSpCas9
 ```
 \*An 80% training & 20% test split was used for base model generation, and therefore has been included in place of the 5-fold cross validation tests used for the TevSpCas9 and SpCas9 enzyme transfer learning-based models.
+
+# 6: Citations -- TO DO
