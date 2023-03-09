@@ -1,5 +1,4 @@
 
-import re
 import numpy as np
 import pandas as p
 import tensorflow as tf
@@ -10,7 +9,9 @@ from Bio.SeqUtils import MeltingTemp as mt
 from scipy.stats import spearmanr
 from statistics import stdev
 import os
+
 import sys
+
 import encoder as e
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "1" 
@@ -72,7 +73,7 @@ def write_prediction(y_pred, df_test, predictionfilename):
 def main(fileoutput="NULL", train=False, compare=False, model="Tev", inputdata="X", seqstart=10, seqend=38, drop_rate=0.3, CNN_filters=128, window_size=3, CNN_drop=0.3, conv1D_padding="same", CNN_dense1=128, CNN_dense2=64, maxpool1D_padding="same", RNN_size=128, RNN_dense1=128, RNN_dense2=64, CNN_RNN_drop=0.3):
 
     if train:
-        if inputdata=="eSpCas9":
+        if inputdata=="eSpCas9" or inputdata=="espcas9":
             i = k.Input(shape=(43,5), name="Input")
 
             # Seqstart and seqend variables used to identify optimal sequence length for model performance
@@ -139,14 +140,13 @@ def main(fileoutput="NULL", train=False, compare=False, model="Tev", inputdata="
             
         else:
             # Test the model with TevSpCas9 data under 5-fold cross validation
-            if "Tev" in indata or "tev" in indata:
-                dataX, datay = get_ttsplit("data/TevSpCas9.csv",1,0)
+            if "Tev" in indata or "tev" in indata: enzyme="TevSpCas9"
             # Test the model with SpCas9 data under 5-fold cross validation
-            elif "SpCas9" in indata or "Cas9" in indata or "cas9" in indata:
-                dataX, datay = get_ttsplit("data/SpCas9.csv",1,0)
-            else:
-                print("ERROR: Invalid training option, please choose one of: TevSpCas9, SpCas9, or eSpCas9.")
-            print("Testing the " + indata + " model.")
+            elif "SpCas9" in indata or "Cas9" in indata or "cas9" in indata: enzyme="SpCas9"
+            else: print("ERROR: Invalid training option, please choose one of: TevSpCas9, SpCas9, or eSpCas9.")
+            
+            dataX, datay = get_ttsplit("data/" + enzyme + "/" + enzyme + ".csv",1,0)
+            print("Testing the " + enzyme + " model.")
 
             kf = KFold(n_splits=5, shuffle=True, random_state=1)
             results=[]
@@ -156,7 +156,7 @@ def main(fileoutput="NULL", train=False, compare=False, model="Tev", inputdata="
             for train_index, test_index in kf.split(dataX):
                 cvX_train, cvX_test = dataX[train_index], dataX[test_index]
                 cvy_train, cvy_test = datay[train_index], datay[test_index]
-                m = k.models.load_model("h5/eSpCas9.h5")
+                m = k.models.load_model("data/" + enzyme + "/basemodel.h5")
                 for i in range(0,len(m.layers)):
                     if i not in [18, 22, 28, 34, 35]:
                         m.layers[i].trainable = False
@@ -164,27 +164,25 @@ def main(fileoutput="NULL", train=False, compare=False, model="Tev", inputdata="
                 m.fit(cvX_train, cvy_train, epochs=4, batch_size=20, verbose=0)
                 result = spearmanr(m.predict(cvX_test, verbose=0),cvy_test)
                 results.append(result[0])
-                #print(result)
+                print(result)
             print("\nMean 5-fold cross validation score: " + str(sum(results)/5))
             print("Standard deviation of scores: " + str(stdev(results)))
             print("\nMeasurement performed by Spearman ranked correlation")
 
     else:
         # Load either the TevSpCas9 or SpCas9 model
-        if "Tev" in model or "tev" in model:
-            m = k.models.load_model("h5/TevSpCas9.h5")
-        elif ("SpCas9" in model or "Cas9" in model or "cas9" in model) and "Tev" not in model and "eSpCas9" not in model:
-            m = k.models.load_model("h5/SpCas9.h5")
-        else:
-            print("ERROR: No correct model specified, please choose either: TevSpCas9 or SpCas9")
-            return
-        
+        if "Tev" in model or "tev" in model: enzyme="TevSpCas9"
+        elif ("SpCas9" in model or "Cas9" in model or "cas9" in model) and "Tev" not in model and "eSpCas9" not in model: enzyme="SpCas9"
+        else: print("ERROR: No correct model specified, please choose either: TevSpCas9 or SpCas9")
+        m = k.models.load_model("data/" + enzyme + "/" + enzyme + ".h5")
+
         # Option: Comparison of the model predictions to prior scores
         if compare:
             input_data, input_Xall, input_yall = get_ttsplit(inputdata,1,0,True)
             input_pred = m.predict(input_Xall, verbose=0)
             spearman_corr = spearmanr(input_pred,input_yall,axis=0)
             print("Spearman ranked correlation coefficient: " + str(spearman_corr[0]))
+        # No comparison, only predictions
         else:
             input_data, input_Xall, input_yall = get_ttsplit(inputdata,1,0,True,prediction=True)
             input_pred = m.predict(input_Xall, verbose=0)
