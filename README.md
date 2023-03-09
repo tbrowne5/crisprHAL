@@ -44,7 +44,10 @@ This will take an input nucleotide fasta file and identify potential sgRNA seque
 will be a .csv file containing the predicted guides. This can be used as input for the prediction step
 
 ```
-python process_inputs.py [Input Nucleotide File]
+# python process_inputs.py [Input Nucleotide File]
+python process_inputs.py phiX174.fna
+
+#output phiX174_output.csv
 ```
 
 * **Input Nucleotide File**: Single line nucleotide input with multiple sequences broken up by ">NAME" lines
@@ -72,7 +75,9 @@ CCAGACTCCTGTGTAACATATGCAACCGTTCTAACCCGCTGGGTGAAGACTTTGACTACCGCAAAGAGTTTAGCAAGTTA
 This will take the file of the predicted sgRNA sequences from above and assign a score. Higher scores are better!
 The output a .csv file named OUTPUT_[inputfile] and contains the sgRNA and the score.
 ```
-python crisprHAL.py [Enzyme] [Input file csv] [Optional compare]
+# python crisprHAL.py [Enzyme] [Input file csv] [Optional compare]
+python crisprHAL.py TevSpCas9  phiX174_output.csv
+# output
 ```
 
 * **Enzyme**: "TevSpCas9" or "SpCas9"
