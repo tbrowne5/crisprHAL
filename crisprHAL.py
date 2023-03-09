@@ -38,7 +38,7 @@ def formatinputs(dataframe_input):
     for i in range(0, len(xprior)):
         for j in range(0, len(X_train[0])): 
             X_train[i][j] = np.append(xprior[i][j], long_temps[i]/100)
-    y_train = np.array(y_train.astype(np.float))    
+    y_train = np.array(y_train.astype(float))    
     return X_train, y_train
 
 
