@@ -115,7 +115,7 @@ Perform 5-fold cross validation with the SpCas9 dataset transfer learning from t
 python crisprHAL.py train SpCas9
 ```
 
-Perform 5-fold cross validation with the eSpCas9 dataset (Guo et al. 2018) used as the base model:
+Perform 80:20 train-test split with the eSpCas9 dataset (Guo et al. 2018) used as the base model\*:
 ```
 python crisprHAL.py train eSpCas9
 ```
