@@ -146,7 +146,7 @@ def main(fileoutput="NULL", train=False, compare=False, model="Tev", inputdata="
             else: print("ERROR: Invalid training option, please choose one of: TevSpCas9, SpCas9, or eSpCas9.")
             
             dataX, datay = get_ttsplit("data/" + enzyme + "/" + enzyme + ".csv",1,0)
-            print("Testing the " + enzyme + " model.")
+            print("\nTesting the " + enzyme + " model\n")
 
             kf = KFold(n_splits=5, shuffle=True, random_state=1)
             results=[]
@@ -162,30 +162,31 @@ def main(fileoutput="NULL", train=False, compare=False, model="Tev", inputdata="
                         m.layers[i].trainable = False
                 m.compile(**compile_options)
                 m.fit(cvX_train, cvy_train, epochs=4, batch_size=20, verbose=0)
-                result = spearmanr(m.predict(cvX_test, verbose=0),cvy_test)
+                result = spearmanr(m.predict(cvX_test, verbose=1),cvy_test)
                 results.append(result[0])
                 print(result)
             print("\nMean 5-fold cross validation score: " + str(sum(results)/5))
             print("Standard deviation of scores: " + str(stdev(results)))
-            print("\nMeasurement performed by Spearman ranked correlation")
+            print("\nMeasurement performed by Spearman ranked correlation coefficient")
 
     else:
         # Load either the TevSpCas9 or SpCas9 model
         if "Tev" in model or "tev" in model: enzyme="TevSpCas9"
         elif ("SpCas9" in model or "Cas9" in model or "cas9" in model) and "Tev" not in model and "eSpCas9" not in model: enzyme="SpCas9"
         else: print("ERROR: No correct model specified, please choose either: TevSpCas9 or SpCas9")
+        print("\nRunning the " + enzyme + " model\n")
         m = k.models.load_model("data/" + enzyme + "/" + enzyme + ".h5")
 
-        # Option: Comparison of the model predictions to prior scores
+        # Comparison of the model predictions to prior scores
         if compare:
             input_data, input_Xall, input_yall = get_ttsplit(inputdata,1,0,True)
-            input_pred = m.predict(input_Xall, verbose=0)
+            input_pred = m.predict(input_Xall, verbose=1)
             spearman_corr = spearmanr(input_pred,input_yall,axis=0)
             print("Spearman ranked correlation coefficient: " + str(spearman_corr[0]))
-        # No comparison, only predictions
+        # No comparison, only perform model prediction
         else:
             input_data, input_Xall, input_yall = get_ttsplit(inputdata,1,0,True,prediction=True)
-            input_pred = m.predict(input_Xall, verbose=0)
+            input_pred = m.predict(input_Xall, verbose=1)
         if fileoutput != "NULL":
             write_prediction(input_pred, input_data, fileoutput)
 
@@ -199,8 +200,6 @@ if len(sys.argv) > 1:
     outfile="Output_" + indata
     main(inputdata=indata,model=modelname,fileoutput=outfile,compare=compare,train=train)
 else:
-    print("Beginning the crisprHAL.py model test")
-    print("\nRunning the TevSpCas9 model with an example SpCas9 dataset of 7821 sgRNAs from Guo et al. 2018")
+    print("\nBeginning the crisprHAL.py model test\nTesting on an example SpCas9 dataset of 7821 sgRNAs from Guo et al. 2018")
     main(inputdata="test_dataset.csv",model="TevSpCas9",fileoutput="Output_TevSpCas9_test_dataset.csv",compare=True,train=False)
-    print("\nRunning the SpCas9 model with an example SpCas9 dataset of 7821 sgRNAs from Guo et al. 2018")
     main(inputdata="test_dataset.csv",model="SpCas9",fileoutput="Output_SpCas9_test_dataset.csv",compare=True,train=False)
