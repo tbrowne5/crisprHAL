@@ -5,7 +5,7 @@ The CRISPR/Cas9 nuclease from Streptococcus pyogenes SpCas9 can be used with sin
 # 0: Requirements:
 ```
 python==3.8.8
-numpy=1.19.2
+numpy==1.19.2
 numpy-base==1.19.2
 biopython==1.78
 h5py==2.10.0
