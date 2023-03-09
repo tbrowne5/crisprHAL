@@ -1,9 +1,10 @@
 import sys
 
-outfile = sys.argv[1].split(".")
+outname = sys.argv[1].split(".")
 
 inputfile = open(sys.argv[1],"r")
-outfile = open(outfile[0] + "_output.csv","w+")
+outfile = open(outname[0] + "_output.csv","w+")
+print("\nPreparing the file: " + str(outname[0]) + "_output.csv")
 outfile.write("sgRNAs\n")
 
 checkduplicates = []
@@ -44,10 +45,12 @@ for line in inputfile:
 					dups += 1
 				checkduplicates.append(revstr[i-22:i+1])
 
-print("Forward strand sgRNAs found: " + str(forward))
+print("\nForward strand sgRNAs found: " + str(forward))
 print("Reverse strand sgRNAs found: " + str(reverse))
 print("Total sgRNAs found: " + str(forward+reverse))
 print("Total duplicate sites found: " + str(dups))
 print("Total unique sgRNAs found: " + str(forward+reverse-dups))
+
+print("\nPlease use the file: " + str(outname[0]) + "_output.csv as the input to crisprHAL.py")
 
 outfile.close()
