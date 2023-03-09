@@ -105,7 +105,7 @@ CCGTGTAAGGGAGATTACACAGGCTAAG,4.25926295656
 
 # 5: Validate the training of the model
 
-Perform 5-fold cross validation with the TevSpCas9 dataset constructed on the eSpCas9 base model:
+Perform 5-fold cross validation with the TevSpCas9 dataset transfer learning from the eSpCas9 base model:
 ```
 python crisprHAL.py train TevSpCas9
 ```
