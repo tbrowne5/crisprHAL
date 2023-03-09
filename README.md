@@ -103,7 +103,7 @@ TCGATTGAGGGGCTGGGAATGGGTGATC,41.2590972746
 CCGTGTAAGGGAGATTACACAGGCTAAG,4.25926295656
 ```
 
-# Addition: Validate the training of the model
+# 5: Validate the training of the model
 
 Perform 5-fold cross validation with the TevSpCas9 dataset constructed on the eSpCas9 base model:
 ```
