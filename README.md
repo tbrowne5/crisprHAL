@@ -22,6 +22,8 @@ Additional information and methods:
 * 6: Citations
 
 # 0: Requirements:
+
+These are in a file called requirements.txt and should be in the working directory
 ```
 python>=3.8.8
 numpy==1.19.2
@@ -36,6 +38,15 @@ scikit-learn==0.24.1
 scipy==1.6.1
 tensorflow==2.4.0
 ```
+
+These can be instantiated within a conda environment:
+
+```
+conda create --name HAL python=[ACTIVE VERSION]
+conda activatte HAL
+conda install --file requirements.txt
+```
+
 # 1: Run model test:
 ```
 python crisprHAL.py
