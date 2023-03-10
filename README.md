@@ -17,7 +17,7 @@ Additional information and methods:
 
 # 0: Requirements:
 ```
-python==3.8.8
+python>=3.8.8
 numpy==1.19.2
 numpy-base==1.19.2
 biopython==1.78
@@ -34,23 +34,18 @@ tensorflow==2.4.0
 ```
 python crisprHAL.py
 ```
-Test our TevSpCas9 model with an example SpCas9 dataset of 7821 unique sgRNA target sites from Guo et al. 2018.
+Test our TevSpCas9 model with an example SpCas9 dataset of 7821 unique sgRNA target sites from Guo et al. 2018. 
+
+Success here is that the model runs without error, showing that it is installed correctly
 
 
 
-# 2: Process nucleotide sequence(s) into sgRNA target model inputs:
+# 2: Process a fasta file of nucleotide sequence(s) into sgRNA target model inputs:
 
 This will take an input nucleotide fasta file and identify potential sgRNA sequences for evaluation. The output
-will be a .csv file containing the predicted guides. This can be used as input for the prediction step
+will be a .csv file containing the predicted guides. This can be used as input for the prediction step.
 
-```
-# python process_inputs.py [Input Nucleotide File]
-python process_inputs.py phiX174.fna
-
-#output phiX174_output.csv
-```
-
-* **Input Nucleotide File**: Single line nucleotide input with multiple sequences broken up by ">NAME" lines
+* **Input Nucleotide File**: Single line fasta-formatted nucleotide input with multiple sequences broken up by ">IDENTIFIER" lines
 * **Output**: 28 nucleotide sequences in a CSV file appropriate as an input to the model
 
 Composition of the 28 nucleotide inputs:
@@ -59,31 +54,35 @@ Composition of the 28 nucleotide inputs:
 * 5 nucleotides downstream, ie: GTGAT
 * Total: CTCGATTGAGGGGCTGGGAATGGGTGAT
 
-Example input file shown below:
+Example input file and run shown below with a phiX174 genome:
 ```
 >Sequence1
 TCGAGCATGCATCTAGAGGGCCCAATTCGCCCTATAGTGAGTCGTATTACAATTCACTGGCCGTCGTTTTACAACGTCGTGACTGGGAAAACCC
->Sequence2
-CCGACTCGTCCAACATCAATACAACCTATTAATTTCCCCTCGTCAAAAATAAGGTTATCAAGTGAGAAATCACCATGAGTGAC
->Sequence3
-CCAGACTCCTGTGTAACATATGCAACCGTTCTAACCCGCTGGGTGAAGACTTTGACTACCGCAAAGAGTTTAGCAAGTTAGACTACTCCGCCCTGAAAGGGGATC
-```
+...etc
 
+# python process_inputs.py [Input Nucleotide File]
+python process_inputs.py phiX174.fna
+
+#output: phiX174_output.csv
+```
 
 # 3: Predict with model: 
 
 This will take the file of the predicted sgRNA sequences from above and assign a score. Higher scores are better!
-The output a .csv file named OUTPUT_[inputfile] and contains the sgRNA and the score.
-```
-# python crisprHAL.py [Enzyme] [Input file csv] [Optional compare]
-python crisprHAL.py TevSpCas9  phiX174_output.csv
-# output
-```
+The output is a .csv file named OUTPUT_[inputfile] and contains the sgRNA and the score.
 
 * **Enzyme**: "TevSpCas9" or "SpCas9"
 * **Input**: CSV file input name; created in section 2 or matching the required format (Format: Section 4)
 * **Optional Compare**: "Compare" if your CSV file contains scores for comparison to model predictions (Format: Section 4)
 * **Output**: Tab-deliminated (TSV) file containing the 28 nucleotide sequence and predicted Cas9 activity value
+
+Example run with the phiX174 predicted sgRNA seqeunces
+```
+# python crisprHAL.py [Enzyme] [Input file csv] [Optional compare]
+python crisprHAL.py TevSpCas9  phiX174_output.csv
+# output: OUTPUT_phiX174_output.csv
+```
+
 
 Example command with prediction only, no "compare" option:
 ```
@@ -129,6 +128,8 @@ CCGTGTAAGGGAGATTACACAGGCTAAG,4.25926295656
 ```
 
 # 5: Validate the training of the model
+
+This will assess whether the training model is working. It will not change the model used for predictions.
 
 Perform 5-fold cross validation with the TevSpCas9 dataset transfer learning from the eSpCas9 base model:
 ```
