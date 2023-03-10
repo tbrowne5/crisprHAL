@@ -56,7 +56,7 @@ Success here is that the model runs without error, showing that it is installed 
 
 
 
-# 2: Process a fasta file of nucleotide sequence(s) into sgRNA target model inputs:
+# 2: Process a fasta file of nucleotide sequence(s) into sgRNA target model inputs: TO DO -- Update this section with new file that allows for multiline fasta (process_fasta.py; doesn't accept multiple sequences anymore though)
 
 This will take an input nucleotide fasta file and identify potential sgRNA sequences for evaluation. The output
 will be a .csv file containing the predicted guides. This can be used as input for the prediction step.
