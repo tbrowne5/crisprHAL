@@ -4,6 +4,12 @@ The CRISPR/Cas9 nuclease from Streptococcus pyogenes SpCas9 can be used with sin
 
 # Sections of this guide:
 
+# QUICK START
+
+### If you wish to run the model on your own nucleodide sequnce follow parts 0 to 3. 
+
+### If you wish to validate the model or to update the model with your own data, follow parts 4 to 5
+
 Setting up and running the model to predict sgRNA activities:
 * 0: Model requirements
 * 1: Running the model test
@@ -24,12 +30,12 @@ biopython==1.78
 h5py==2.10.0
 hdf5==1.10.6
 keras-preprocessing==1.1.2
-pandas==1.2.2
+pandas
+==1.2.2
 scikit-learn==0.24.1
 scipy==1.6.1
 tensorflow==2.4.0
 ```
-
 # 1: Run model test:
 ```
 python crisprHAL.py
