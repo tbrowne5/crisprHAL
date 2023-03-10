@@ -42,7 +42,7 @@ These can be instantiated within a conda environment:
 
 ```
 conda create --name HAL python=[ACTIVE VERSION]
-conda activatte HAL
+conda activate HAL
 conda install --file requirements.txt
 ```
 
