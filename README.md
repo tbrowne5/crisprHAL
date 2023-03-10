@@ -32,8 +32,7 @@ biopython==1.78
 h5py==2.10.0
 hdf5==1.10.6
 keras-preprocessing==1.1.2
-pandas
-==1.2.2
+pandas==1.2.2
 scikit-learn==0.24.1
 scipy==1.6.1
 tensorflow==2.4.0
