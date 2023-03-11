@@ -41,7 +41,6 @@ def formatinputs(dataframe_input):
     y_train = np.array(y_train.astype(float))    
     return X_train, y_train
 
-
 def get_ttsplit(data,ttsplitstate=1,tst_size=0.2,return_pre_format_values=False,prediction=False):
     dataset = p.read_csv(data, header=None, skiprows=0,).dropna(how="all")
     if prediction: dataset['scores'] = 0
@@ -61,19 +60,22 @@ def get_ttsplit(data,ttsplitstate=1,tst_size=0.2,return_pre_format_values=False,
         if return_pre_format_values==False: return X_train, X_test, y_train, y_test
         else: return df_train, df_test, X_train, X_test, y_train, y_test
 
-
 def write_prediction(y_pred, df_test, predictionfilename):
     predictionwrite = open(predictionfilename,"w+")
     np_train = df_test.index.to_numpy()
-    for i in range(0,len(np_train)):
-        predictionwrite.write(np_train[i] + "\t" + str(y_pred[i]).replace(' [','').replace('[', '').replace(']', '') + "\n")
+    outputreturn = {}
+    predictionwrite.write("sgRNA,28nt_model_input,score\n")
+    for i in range(0,len(np_train)): outputreturn[np_train[i]] = str(y_pred[i]).replace(' [','').replace('[', '').replace(']', '')
+    for item in dict(sorted(outputreturn.items(), key=lambda item: item[1], reverse=True)): predictionwrite.write(str(item[0:20]) + "," + str(item) + "," + str(outputreturn[item]) + "\n")
+    #predictionwrite.write(np_train[i][0:20] + "," + np_train[i] + "," + str(y_pred[i]).replace(' [','').replace('[', '').replace(']', '') + "\n")
+    #outputreturn[np_train[i]] = y_pred[i]
     predictionwrite.close()
-
+    return dict(sorted(outputreturn.items(), key=lambda item: item[1], reverse=True))
 
 def main(fileoutput="NULL", train=False, compare=False, model="Tev", inputdata="X", seqstart=10, seqend=38, drop_rate=0.3, CNN_filters=128, window_size=3, CNN_drop=0.3, conv1D_padding="same", CNN_dense1=128, CNN_dense2=64, maxpool1D_padding="same", RNN_size=128, RNN_dense1=128, RNN_dense2=64, CNN_RNN_drop=0.3):
 
     if train:
-        if inputdata=="eSpCas9" or inputdata=="espcas9":
+        if inputdata.lower()=="espcas9":
             i = k.Input(shape=(43,5), name="Input")
 
             # Seqstart and seqend variables used to identify optimal sequence length for model performance
@@ -137,12 +139,12 @@ def main(fileoutput="NULL", train=False, compare=False, model="Tev", inputdata="
             m.fit(dataX_train,datay_train,epochs=40,batch_size=200,verbose=1)
             result = spearmanr(m.predict(dataX_test),datay_test,axis=0)
             print("\nSpearman ranked correlation coefficient: " + str(result[0]))
-            
+      
         else:
             # Test the model with TevSpCas9 data under 5-fold cross validation
-            if "Tev" in indata or "tev" in indata: enzyme="TevSpCas9"
+            if "tev" in indata.lower(): enzyme="TevSpCas9"
             # Test the model with SpCas9 data under 5-fold cross validation
-            elif "SpCas9" in indata or "Cas9" in indata or "cas9" in indata: enzyme="SpCas9"
+            elif "cas9" in indata.lower(): enzyme="SpCas9"
             else: print("ERROR: Invalid training option, please choose one of: TevSpCas9, SpCas9, or eSpCas9.")
             
             dataX, datay = get_ttsplit("data/" + enzyme + "/" + enzyme + ".csv",1,0)
@@ -168,11 +170,10 @@ def main(fileoutput="NULL", train=False, compare=False, model="Tev", inputdata="
             print("\nMean 5-fold cross validation score: " + str(sum(results)/5))
             print("Standard deviation of scores: " + str(stdev(results)))
             print("\nMeasurement performed by Spearman ranked correlation coefficient")
-
     else:
         # Load either the TevSpCas9 or SpCas9 model
-        if "Tev" in model or "tev" in model: enzyme="TevSpCas9"
-        elif ("SpCas9" in model or "Cas9" in model or "cas9" in model) and "Tev" not in model and "eSpCas9" not in model: enzyme="SpCas9"
+        if "tev" in model.lower(): enzyme="TevSpCas9"
+        elif "cas9" in model.lower() and "tev" not in model.lower() and "espcas9" not in model.lower(): enzyme="SpCas9"
         else: print("ERROR: No correct model specified, please choose either: TevSpCas9 or SpCas9")
         print("\nRunning the " + enzyme + " model\n")
         m = k.models.load_model("data/" + enzyme + "/" + enzyme + ".h5")
@@ -182,22 +183,29 @@ def main(fileoutput="NULL", train=False, compare=False, model="Tev", inputdata="
             input_data, input_Xall, input_yall = get_ttsplit(inputdata,1,0,True)
             input_pred = m.predict(input_Xall, verbose=1)
             spearman_corr = spearmanr(input_pred,input_yall,axis=0)
-            print("Spearman ranked correlation coefficient: " + str(spearman_corr[0]))
+            print("Spearman ranked correlation coefficient: " + str(spearman_corr[0]) + "\n")
         # No comparison, only perform model prediction
         else:
             input_data, input_Xall, input_yall = get_ttsplit(inputdata,1,0,True,prediction=True)
             input_pred = m.predict(input_Xall, verbose=1)
         if fileoutput != "NULL":
-            write_prediction(input_pred, input_data, fileoutput)
+            output = write_prediction(input_pred, input_data, fileoutput)
+            top=1
+            for item in output:
+                print("#" + str(top) + " sgRNA: " + str(item[0:20]) + "\t\t28nt model input: " + str(item) + ", score: " + str(output[item]))
+                top+=1
+                if top > 5: break
+    
+    k.backend.clear_session()
 
 compare=False
 train=False
 if len(sys.argv) > 1:
     modelname=str(sys.argv[1])
-    if modelname=="train" or modelname=="Train": train=True
+    if modelname.lower()=="train": train=True
     if len(sys.argv) > 2: indata=str(sys.argv[2])
-    if len(sys.argv) > 3 and ("compare" in str(sys.argv[3]) or "Compare" in str(sys.argv[3])): compare=True
-    outfile="Output_" + indata
+    if len(sys.argv) > 3 and "compare" in str(sys.argv[3]).lower(): compare=True
+    outfile="output_" + indata
     main(inputdata=indata,model=modelname,fileoutput=outfile,compare=compare,train=train)
 else:
     print("\nBeginning the crisprHAL.py model test\nTesting on an example SpCas9 dataset of 7821 sgRNAs from Guo et al. 2018")
