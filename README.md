@@ -165,13 +165,9 @@ python crisprHAL.py train eSpCas9
 
 # 6: Citations -- TO DO
 
-@article{guo2018improved,
-  title={Improved sg{RNA} design in bacteria via genome-wide activity profiling},
-  author={Guo, Jiahui and Wang, Tianmin and Guan, Changge and Liu, Bing and Luo, Cheng and Xie, Zhen and Zhang, Chong and Xing, Xin-Hui},
-  journal={Nucleic acids research},
-  volume={46},
-  number={14},
-  pages={7052--7069},
-  year={2018},
-  publisher={{O}xford {U}niversity {P}ress}
-}
+Guo, J. et al. Improved sgRNA design in bacteria via genome-wide activity profiling. Nucleic acids research 46, 7052–7069 (2018).
+
+Abadi, M. et al. TensorFlow: Large-scale machine learning on heterogeneous systems (2015). Software available from tensorflow.org.
+
+Virtanen, P. et al. SciPy 1.0: fundamental algorithms for scientific computing in python. Nat. Methods \textb{17}, 261–272 (2020).
+
