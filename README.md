@@ -52,16 +52,16 @@ python crisprHAL.py
 ```
 Test our TevSpCas9 model with an example SpCas9 dataset of 7821 unique sgRNA target sites from Guo et al. 2018. 
 
-Success here is that the model runs without error, showing that it is installed correctly
+Success here is that the model runs without error, showing that it is installed correctly.
 
 
 
-# 2: Process a fasta file of nucleotide sequence(s) into sgRNA target model inputs: TO DO -- Update this section with new file that allows for multiline fasta (process_fasta.py; doesn't accept multiple sequences anymore though)
+# 2: Process a fasta file of nucleotide sequence(s) into sgRNA target model inputs:
 
 This will take an input nucleotide fasta file and identify potential sgRNA sequences for evaluation. The output
 will be a .csv file containing the predicted guides. This can be used as input for the prediction step.
 
-* **Input Nucleotide File**: Single line fasta-formatted nucleotide input with multiple sequences broken up by ">IDENTIFIER" lines
+* **Input Nucleotide File**: One single-line or multi-line fasta-formatted nucleotide sequence starting with a ">IDENTIFIER"
 * **Output**: 28 nucleotide sequences in a CSV file appropriate as an input to the model
 
 Composition of the 28 nucleotide inputs:
@@ -76,8 +76,8 @@ Example input file and run shown below with a phiX174 genome:
 TCGAGCATGCATCTAGAGGGCCCAATTCGCCCTATAGTGAGTCGTATTACAATTCACTGGCCGTCGTTTTACAACGTCGTGACTGGGAAAACCC
 ...etc
 
-# python process_inputs.py [Input Nucleotide File]
-python process_inputs.py phiX174.fna
+# python process_fasta.py [Input Nucleotide File]
+python process_fasta.py phiX174.fna
 
 #output: phiX174_output.csv
 ```
