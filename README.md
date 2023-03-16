@@ -58,7 +58,7 @@ Success here is that the model runs without error, showing that it is installed 
 
 # 2: Process a fasta file of nucleotide sequence(s) into sgRNA target model inputs:
 
-This will take an input nucleotide fasta file and identify potential sgRNA sequences for evaluation. The output
+This will take an input nucleotide fasta file and identifies potential sgRNA sequences for evaluation. The output
 will be a .csv file containing the predicted guides. This can be used as input for the prediction step.
 
 * **Input Nucleotide File**: One single-line or multi-line fasta-formatted nucleotide sequence starting with a ">IDENTIFIER"
