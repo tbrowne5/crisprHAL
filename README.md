@@ -169,5 +169,5 @@ Guo, J. et al. Improved sgRNA design in bacteria via genome-wide activity profil
 
 Abadi, M. et al. TensorFlow: Large-scale machine learning on heterogeneous systems (2015). Software available from tensorflow.org.
 
-Virtanen, P. et al. SciPy 1.0: fundamental algorithms for scientific computing in python. Nat. Methods \textb{17}, 261–272 (2020).
+Virtanen, P. et al. SciPy 1.0: fundamental algorithms for scientific computing in python. Nat. Methods \textit{17}, 261–272 (2020).
 
