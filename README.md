@@ -164,3 +164,14 @@ python crisprHAL.py train eSpCas9
 \*An 80% training & 20% test split was used for base model generation, and therefore has been included in place of the 5-fold cross validation tests used for the TevSpCas9 and SpCas9 enzyme transfer learning-based models.
 
 # 6: Citations -- TO DO
+
+@article{guo2018improved,
+  title={Improved sg{RNA} design in bacteria via genome-wide activity profiling},
+  author={Guo, Jiahui and Wang, Tianmin and Guan, Changge and Liu, Bing and Luo, Cheng and Xie, Zhen and Zhang, Chong and Xing, Xin-Hui},
+  journal={Nucleic acids research},
+  volume={46},
+  number={14},
+  pages={7052--7069},
+  year={2018},
+  publisher={{O}xford {U}niversity {P}ress}
+}
