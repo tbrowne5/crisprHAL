@@ -6,8 +6,8 @@ NCBI SRA Bioproject: PRJNA939699
 
 * 1. Merge paired read files available at the SRA link
 * 2. Separate sgRNAs from the merged reads file by their barcode using the perl script
-* 3. Load the resulting file into R
-* 4. Use ALDEx2 CLR and effect functions on the dataset with 10 selective and 10 non-selective conditions (details found at https://bioconductor.org/packages/release/bioc/html/ALDEx2.html)
+* 3. Generate a file of 28 nucleotide inputs and 20 nucleotide sgRNA target sites with the python program ...
+* 4. In R, use ALDEx2 CLR and effect functions on the dataset with 10 selective and 10 non-selective conditions (details found at https://bioconductor.org/packages/release/bioc/html/ALDEx2.html)
 * 5. Extend the 20 nucleotide sgRNA target sites by 8 nucleotides downstream to obtain the model input sequences
 
 R data processing to generate scores from raw data
