@@ -32,7 +32,7 @@ if flag:
         if seq[i] == "G" and seq[i-1] == "G":
             forward += 1
             if seq[i-22:i+1] not in checkduplicates:
-                outfile.write(seq[i-22:i+6] + "\t" + seq[i-22:i-1] + "\n")
+                outfile.write(seq[i-22:i+6] + "\t" + seq[i-22:i-2] + "\n")
             else:
                 print("DUPLICATE: " + seq[i-22:i+1])
                 dups += 1
@@ -41,7 +41,7 @@ if flag:
         if revstr[i] == "G" and revstr[i-1] == "G":
             reverse += 1
             if revstr[i-22:i+1] not in checkduplicates:
-                outfile.write(revstr[i-22:i+6] + "\t" + seq[i-22:i-1] + "\n")
+                outfile.write(revstr[i-22:i+6] + "\t" + seq[i-22:i-2] + "\n")
             else:
                 print("DUPLICATE: " + revstr[i-22:i+1])
                 dups += 1
