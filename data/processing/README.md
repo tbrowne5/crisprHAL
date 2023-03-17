@@ -6,11 +6,17 @@ NCBI SRA Bioproject: PRJNA939699
 
 * 1. Merge paired read files available at the SRA link
 * 2. Separate sgRNAs from the merged reads file by their barcode using the perl script
-* 3. Generate a file of 28 nucleotide inputs and 20 nucleotide sgRNA target sites with the python program ...
+* 3. Generate a file of 28 nucleotide inputs and 20 nucleotide sgRNA target sites with the python program prepare_28nt_sequences.py
 * 4. In R, use ALDEx2 CLR and effect functions on the dataset with 10 selective and 10 non-selective conditions (details found at https://bioconductor.org/packages/release/bioc/html/ALDEx2.html)
 * 5. Extend the 20 nucleotide sgRNA target sites by 8 nucleotides downstream to obtain the model input sequences
 
-R data processing to generate scores from raw data
+
+3. Python generation of the 28 nucleotide inputs to be merged in R
+```
+python prepare_28nt_sequences.py [Input_fasta_sequence]
+```
+
+4. R data processing to generate scores from raw data
 ```
 library(ALDEx2)
 
@@ -22,6 +28,14 @@ conds <- c(rep("NS",10),rep("S",10))
 data.clr <- aldex.clr(data,conds)
 data.effect <- aldex.effect(data.clr)
 data.output <- data.effect
-data.output[,c(1,2,3,5,6,7)] <- NULL
-data.output$diff.btw <- data.output$diff.btw / sd(data.output$diff.btw)
+
+sgRNAs <- read.csv("sgRNA_20_to_28nt_fasta_name.csv",header=TRUE,sep="\t")
+output <- merge(sgRNAs,data.effect,by.x=2,by.y=0)
+output <- output[,c(2,6)]
+row.names(output) <- output[,1]
+output[,1] <- NULL
+output[,1] <- output[,1] / sd(output[,1]
+
+write.csv(output,"sgRNA_inputs_and_scores.csv",quote=FALSE)
+
 ```
