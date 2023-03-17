@@ -3,7 +3,7 @@ import sys
 outname = sys.argv[1].split(".")
 inputfile = open(sys.argv[1],"r")
 outfile = open("sgRNA_inputs_" + outname[0] + ".csv","w+")
-print("\nPreparing the file: sgRNA_inputs_" + outname[0] + ".csv")
+print("\nPreparing the file: sgRNA_20_to_28nt_" + outname[0] + ".csv")
 outfile.write("sgRNAs\n")
 
 checkduplicates = []
