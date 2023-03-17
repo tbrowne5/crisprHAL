@@ -19,7 +19,7 @@ Setting up and running the model to predict sgRNA activities:
 Additional information and methods: 
 * 4: Preparing your own model input files & comparing predictions
 * 5: Validating the trained models
-* 6: Data availability and preprocessing
+* 6: Data availability and processing
 * 7: Citations
 
 # 0: Requirements:
@@ -164,7 +164,7 @@ python crisprHAL.py train eSpCas9
 ```
 \*An 80% training & 20% test split was used for base model generation, and therefore has been included in place of the 5-fold cross validation tests used for the TevSpCas9 and SpCas9 enzyme transfer learning-based models.
 
-# 6: Data availability and preprocessing
+# 6: Data availability and processing
 
 Raw sequence reads from which the TevSpCas9 and SpCas9 datasets are derived are available at: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA939699
 
