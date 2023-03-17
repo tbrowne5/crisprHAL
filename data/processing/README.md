@@ -7,4 +7,20 @@ NCBI SRA Bioproject: PRJNA939699
 * 1. Merge paired read files available at the SRA link
 * 2. Separate sgRNAs from the merged reads file by their barcode using the perl script
 * 3. Load the resulting file into R
-* 4. Run the R script with ALDEx2 to generate the standard deviation scaled difference-between value scores
+* 4. Use ALDEx2 CLR and effect functions on the dataset with 10 selective and 10 non-selective conditions (details found at https://bioconductor.org/packages/release/bioc/html/ALDEx2.html)
+
+R data processing
+```
+library(ALDEx2)
+
+data <- read.csv("dataset_counts.txt",header=True,Sep="\t")
+data <- t(data)
+data <- data[,c(3,5,8,10,12,14,16,18,20,1,4,6,9,11,13,15,17,19,21,2)]
+
+conds <- c(rep("NS",10),rep("S",10))
+data.clr <- aldex.clr(data,conds)
+data.effect <- aldex.effect(data.clr)
+data.output <- data.effect
+data.output[,c(1,2,3,5,6,7)] <- NULL
+data.output$diff.btw <- data.output$diff.btw / sd(data.output$diff.btw)
+```
