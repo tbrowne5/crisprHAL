@@ -2,7 +2,7 @@
 use strict;
 
 my @data;
-open (FILE, "< data/preprocessing/primers.txt") or die;
+open (FILE, "< primers.txt") or die;
 while (defined (my $l = <FILE>)) {
 	chomp $l;
 	push @data, $l;
@@ -33,7 +33,7 @@ foreach my $k  (keys %barcodes) {
 }
 
 my %sgRNA; my @sgRNAs;
-open (FILE, "< data/preprocessing/guides.txt") or die;
+open (FILE, "< guides.txt") or die;
 while (defined (my $j= <FILE>)) { 
 	chomp $j;
 	my @d= split/\t/,$j;
@@ -44,7 +44,7 @@ while (defined (my $j= <FILE>)) {
 	
 	
 my @reads;
-open (DATA, "< data/preprocessing/merged_read_file.fastq") or die;
+open (DATA, "< merged_read_file.fastq") or die;
 while (defined ( my $l = <DATA> )) { 
 	chomp $l;
 	push @reads,$l
