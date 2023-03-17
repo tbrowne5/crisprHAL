@@ -167,7 +167,9 @@ python crisprHAL.py train eSpCas9
 # 6: Data availability and processing steps
 
 Raw sequence reads from which the TevSpCas9 and SpCas9 datasets are derived are available at: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA939699
+
 NCBI SRA Bioproject: PRJNA939699
+
 Data processing: crisprHAL/readprocessing/[TODO]
 
 
