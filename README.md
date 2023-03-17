@@ -19,7 +19,8 @@ Setting up and running the model to predict sgRNA activities:
 Additional information and methods: 
 * 4: Preparing your own model input files & comparing predictions
 * 5: Validating the trained models
-* 6: Citations
+* 6: Data availability and processing steps
+* 7: Citations
 
 # 0: Requirements:
 
@@ -163,7 +164,14 @@ python crisprHAL.py train eSpCas9
 ```
 \*An 80% training & 20% test split was used for base model generation, and therefore has been included in place of the 5-fold cross validation tests used for the TevSpCas9 and SpCas9 enzyme transfer learning-based models.
 
-# 6: Citations -- TO DO
+# 6: Data availability and processing steps
+
+Raw sequence reads from which the TevSpCas9 and SpCas9 datasets are derived are available at: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA939699
+NCBI SRA Bioproject: PRJNA939699
+Data processing: crisprHAL/readprocessing/[TODO]
+
+
+# 7: Citations
 
 Guo, J. et al. Improved sgRNA design in bacteria via genome-wide activity profiling. Nucleic acids research **46**, 7052–7069 (2018).
 Abadi, M. et al. TensorFlow: Large-scale machine learning on heterogeneous systems (2015). Software available from tensorflow.org.
