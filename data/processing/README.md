@@ -10,8 +10,7 @@ Order of operations for file generation:
 * 3. Generate a file of 28 nucleotide inputs and 20 nucleotide sgRNA target sites with the python program *prepare_28nt_sequences.py*
 * 4. In R, use ALDEx2 CLR and effect functions on the dataset with the R script *get_inputs_and_scores.R* (ALDEx2 information available at https://bioconductor.org/packages/release/bioc/html/ALDEx2.html)
 
-
-3. Python generation of the 28 nucleotide inputs to be merged in R
 ```
+#Python generation of the 28 nucleotide inputs to be merged in R
 python prepare_28nt_sequences.py [Input_fasta_sequence]
 ```
