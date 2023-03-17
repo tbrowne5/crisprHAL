@@ -170,7 +170,7 @@ Raw sequence reads from which the TevSpCas9 and SpCas9 datasets are derived are 
 
 NCBI SRA Bioproject: PRJNA939699
 
-Information about data processing can be found under crisprHAL/data/preprocessing.
+Information about data processing can be found under crisprHAL/data/processing.
 
 
 # 7: Citations
