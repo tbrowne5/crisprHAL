@@ -12,9 +12,9 @@ The CRISPR/Cas9 nuclease from Streptococcus pyogenes (SpCas9) can be used with s
 
 Setting up and running the model to predict sgRNA activities:
 * 0: Model requirements ```1-10 minutes```
-* 1: Running the model test (speed: <10 seconds)
-* 2: Processing nucleotide sequences into model inputs (speed: <10 seconds)
-* 3: Predicting with the model (<10 sec.)
+* 1: Running the model test ```<10 seconds```
+* 2: Processing nucleotide sequences into model inputs ```<10 seconds```
+* 3: Predicting with the model ```<10 seconds```
 
 Additional information and methods: 
 * 4: Preparing your own model input files & comparing predictions
