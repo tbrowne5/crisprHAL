@@ -11,14 +11,14 @@ The CRISPR/Cas9 nuclease from Streptococcus pyogenes (SpCas9) can be used with s
 # Sections of this guide:
 
 Setting up and running the model to predict sgRNA activities:
-* 0: Model requirements ```1-10 minutes```
-* 1: Running the model test ```10 seconds```
-* 2: Processing nucleotide sequences into model inputs ```1 second```
-* 3: Predicting with the model ```10 seconds```
+* 0: Model requirements ```Time: 1-10 minutes```
+* 1: Running the model test ```Runtime: 10 seconds```
+* 2: Processing nucleotide sequences into model inputs ```Runtime: 1 second```
+* 3: Predicting with the model ```Runtime: 10 seconds```
 
 Additional information and methods: 
 * 4: Preparing your own model input files & comparing predictions
-* 5: Validating the trained models ```15 seconds```
+* 5: Validating the trained models ```Variable runtime```
 * 6: Data availability and processing
 * 7: Citations
 
@@ -39,7 +39,7 @@ scipy==1.6.1
 tensorflow==2.4.0
 ```
 
-These can be instantiated within a conda environment:
+These can be instantiated within a conda environment: ```Time: 1-10 minutes```
 
 ```
 conda create --name HAL python=[ACTIVE VERSION]
@@ -53,14 +53,14 @@ python crisprHAL.py
 ```
 Test our TevSpCas9 model with an example SpCas9 dataset of 7821 unique sgRNA target sites from Guo et al. 2018. 
 
-Success here is that the model runs without error, showing that it is installed correctly.
+Success here is that the model runs without error, showing that it is installed correctly. ```Runtime: ~10 seconds```
 
 
 
 # 2: Process a fasta file of nucleotide sequence(s) into sgRNA target model inputs:
 
-This will take an input nucleotide fasta file and identifies potential sgRNA sequences for evaluation. The output
-will be a .csv file containing the predicted guides. This can be used as input for the prediction step.
+This will take an input nucleotide fasta file and identifies potential sgRNA sequences for evaluation. The output will be
+a .csv file containing the predicted guides. This can be used as input for the prediction step. ```Runtime: ~1 second```
 
 * **Input Nucleotide File**: One single-line or multi-line fasta-formatted nucleotide sequence starting with a ">IDENTIFIER"
 * **Output**: 28 nucleotide sequences in a CSV file appropriate as an input to the model
@@ -86,7 +86,7 @@ python process_fasta.py phiX174.fna
 # 3: Predict with model: 
 
 This will take the file of the predicted sgRNA sequences from above and assign a score. Higher scores are better!
-The output is a .csv file named OUTPUT_[inputfile] and contains the sgRNA and the score.
+The output is a .csv file named OUTPUT_[inputfile] and contains the sgRNA and the score. ```Runtime: ~10 seconds```
 
 * **Enzyme**: "TevSpCas9" or "SpCas9"
 * **Input**: CSV file input name; created in section 2 or matching the required format (Format: Section 4)
@@ -148,17 +148,17 @@ CCGTGTAAGGGAGATTACACAGGCTAAG,4.25926295656
 
 This will assess whether the training model is working. It will not change the model used for predictions.
 
-Perform 5-fold cross validation with the TevSpCas9 dataset transfer learning from the eSpCas9 base model:
+Perform 5-fold cross validation with the TevSpCas9 dataset transfer learning from the eSpCas9 base model: ```Runtime: ~20 seconds```
 ```
 python crisprHAL.py train TevSpCas9
 ```
 
-Perform 5-fold cross validation with the SpCas9 dataset transfer learning from the eSpCas9 base model:
+Perform 5-fold cross validation with the SpCas9 dataset transfer learning from the eSpCas9 base model: ```Runtime: ~20 seconds```
 ```
 python crisprHAL.py train SpCas9
 ```
 
-Perform 80:20 train-test split with the eSpCas9 dataset (Guo et al. 2018) used as the base model\*:
+Perform 80:20 train-test split with the eSpCas9 dataset (Guo et al. 2018) used as the base model\*: ```Runtime: 1-10 minutes```
 ```
 python crisprHAL.py train eSpCas9
 ```
