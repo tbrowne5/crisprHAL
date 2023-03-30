@@ -24,7 +24,7 @@ Additional information and methods:
 
 # 0: Requirements:
 
-These are in a file called requirements.txt and should be in the working directory
+These are in a file called requirements.txt and should be in the working directory.
 ```
 python>=3.8.8
 numpy==1.19.2
@@ -46,6 +46,8 @@ conda create --name HAL python=[ACTIVE VERSION]
 conda activate HAL
 conda install --file requirements.txt
 ```
+
+This installation has been tested in Ubuntu 20.04.4 and Mac OSX 10.14.5, but has not been tested on Windows.
 
 # 1: Run model test:
 ```
