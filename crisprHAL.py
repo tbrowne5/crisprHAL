@@ -66,9 +66,7 @@ def write_prediction(y_pred, df_test, predictionfilename):
     outputreturn = {}
     predictionwrite.write("sgRNA,28nt_model_input,score\n")
     for i in range(0,len(np_train)): outputreturn[np_train[i]] = str(format(float(y_pred[i]), '.8f')).replace(' [','').replace('[', '').replace(']', '')
-    for item in dict(sorted(outputreturn.items(), key=lambda item: item[1], reverse=True)): predictionwrite.write(str(item[0:20]) + "," + str(item) + "," + str(outputreturn[item]) + "\n")
-    #predictionwrite.write(np_train[i][0:20] + "," + np_train[i] + "," + str(y_pred[i]).replace(' [','').replace('[', '').replace(']', '') + "\n")
-    #outputreturn[np_train[i]] = y_pred[i]
+    for item in dict(sorted(outputreturn.items(), key=lambda item: float(item[1]), reverse=True)): predictionwrite.write(str(item[0:20]) + "," + str(item) + "," + str(outputreturn[item]) + "\n")
     predictionwrite.close()
     return dict(sorted(outputreturn.items(), key=lambda item: item[1], reverse=True))
 
