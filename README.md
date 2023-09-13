@@ -23,7 +23,7 @@ Additional information and methods:
 * 7: Citations
 * 8: How to cite this model
 
-## 0: Requirements:
+## 0: Requirements
 
 These are in a file called requirements.txt and should be in the working directory.
 ```
@@ -50,7 +50,7 @@ conda install --file requirements.txt
 
 This installation has been tested in Ubuntu 20.04.4 and Mac OSX 10.14.5, but has not been tested on Windows.
 
-## 1: Run model test:
+## 1: Run model test
 ```
 python crisprHAL.py
 ```
@@ -60,7 +60,7 @@ Success here is that the model runs without error, showing that it is installed 
 
 
 
-## 2: Process a fasta file of nucleotide sequence(s) into sgRNA target model inputs:
+## 2: Process a fasta file of nucleotide sequence(s) into sgRNA target model inputs
 
 This will take an input nucleotide fasta file and identifies potential sgRNA sequences for evaluation. The output will be
 a .csv file containing the predicted guides. This can be used as input for the prediction step. ```Runtime: ~1 second```
@@ -86,7 +86,7 @@ python process_fasta.py phiX174.fna
 #output: phiX174_output.csv
 ```
 
-## 3: Predict with model: 
+## 3: Predict with model
 
 This will take the file of the predicted sgRNA sequences from above and assign a score. Higher scores are better!
 The output is a .csv file named OUTPUT_[inputfile] and contains the sgRNA and the score. ```Runtime: ~10 seconds```
@@ -115,7 +115,7 @@ python crisprHAL.py SpCas9 test_dataset.csv compare
 ```
 
 
-## 4: Preparing your own input CSV Files:
+## 4: Preparing your own input CSV Files
 
 Input CSV file for prediction only, no "Compare" option:
 ```
