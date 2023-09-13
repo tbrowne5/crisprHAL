@@ -4,9 +4,9 @@ The CRISPR/Cas9 nuclease from Streptococcus pyogenes (SpCas9) can be used with s
 
 ## QUICK START
 
-### If you wish to run the model on your own nucleotide sequence follow parts 0 to 3. 
+If you wish to run the model on your own nucleotide sequence follow parts 0 to 3. 
 
-### If you wish to validate the model or to update the model with your own data, follow parts 4 to 5.
+If you wish to validate the model or to update the model with your own data, follow parts 4 to 5.
 
 ## Sections of this guide:
 
