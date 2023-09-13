@@ -1,14 +1,14 @@
-# crisprHAL: [A generalizable Cas9/sgRNA prediction model using machine transfer learning with small high-quality datasets](https://doi.org/10.1038/s41467-023-41143-7)
+## crisprHAL: [A generalizable Cas9/sgRNA prediction model using machine transfer learning with small high-quality datasets](https://doi.org/10.1038/s41467-023-41143-7)
 
 The CRISPR/Cas9 nuclease from Streptococcus pyogenes (SpCas9) can be used with single guide RNAs (sgRNAs) as a sequence-specific antimicrobial agent and as a genome-engineering tool. However, current bacterial sgRNA activity models poorly predict SpCas9/sgRNA activity and are not generalizable, possibly because the underlying datasets used to train the models do not accurately measure SpCas9/sgRNA cleavage activity and cannot distinguish cleavage activity from toxicity. We solved this problem by using a two-plasmid positive selection system to generate high-quality biologically-relevant data that more accurately reports on SpCas9/sgRNA cleavage activity and that separates activity from toxicity. We developed a new machine learning architecture (crisprHAL) that can be trained on existing datasets and that shows marked improvements in sgRNA activity prediction accuracy when transfer learning is used with small amounts of high-quality data. The crisprHAL model recapitulates known SpCas9/sgRNA-target DNA interactions and provides a pathway to a generalizable sgRNA bacterial activity prediction tool.
 
-# QUICK START
+## QUICK START
 
-### If you wish to run the model on your own nucleotide sequnce follow parts 0 to 3. 
+### If you wish to run the model on your own nucleotide sequence follow parts 0 to 3. 
 
 ### If you wish to validate the model or to update the model with your own data, follow parts 4 to 5.
 
-# Sections of this guide:
+## Sections of this guide:
 
 Setting up and running the model to predict sgRNA activities:
 * 0: Model requirements ```Time: 1-10 minutes```
@@ -21,8 +21,9 @@ Additional information and methods:
 * 5: Validating the trained models ```Variable runtime```
 * 6: Data availability and processing
 * 7: Citations
+* 8: How to cite this model
 
-# 0: Requirements:
+## 0: Requirements:
 
 These are in a file called requirements.txt and should be in the working directory.
 ```
@@ -49,7 +50,7 @@ conda install --file requirements.txt
 
 This installation has been tested in Ubuntu 20.04.4 and Mac OSX 10.14.5, but has not been tested on Windows.
 
-# 1: Run model test:
+## 1: Run model test:
 ```
 python crisprHAL.py
 ```
@@ -59,7 +60,7 @@ Success here is that the model runs without error, showing that it is installed 
 
 
 
-# 2: Process a fasta file of nucleotide sequence(s) into sgRNA target model inputs:
+## 2: Process a fasta file of nucleotide sequence(s) into sgRNA target model inputs:
 
 This will take an input nucleotide fasta file and identifies potential sgRNA sequences for evaluation. The output will be
 a .csv file containing the predicted guides. This can be used as input for the prediction step. ```Runtime: ~1 second```
@@ -85,7 +86,7 @@ python process_fasta.py phiX174.fna
 #output: phiX174_output.csv
 ```
 
-# 3: Predict with model: 
+## 3: Predict with model: 
 
 This will take the file of the predicted sgRNA sequences from above and assign a score. Higher scores are better!
 The output is a .csv file named OUTPUT_[inputfile] and contains the sgRNA and the score. ```Runtime: ~10 seconds```
@@ -114,7 +115,7 @@ python crisprHAL.py SpCas9 test_dataset.csv compare
 ```
 
 
-# 4: Preparing your own input CSV Files:
+## 4: Preparing your own input CSV Files:
 
 Input CSV file for prediction only, no "Compare" option:
 ```
@@ -146,7 +147,7 @@ TCGATTGAGGGGCTGGGAATGGGTGATC,41.2590972746
 CCGTGTAAGGGAGATTACACAGGCTAAG,4.25926295656
 ```
 
-# 5: Validate the training of the model
+## 5: Validate the training of the model
 
 This will assess whether the training model is working. It will not change the model used for predictions.
 
@@ -166,7 +167,7 @@ python crisprHAL.py train eSpCas9
 ```
 \*An 80% training & 20% test split was used for base model generation, and therefore has been included in place of the 5-fold cross validation tests used for the TevSpCas9 and SpCas9 enzyme transfer learning-based models.
 
-# 6: Data availability and processing
+## 6: Data availability and processing
 
 Raw sequence reads from which the TevSpCas9 and SpCas9 datasets are derived are available at: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA939699
 
@@ -175,13 +176,13 @@ NCBI SRA Bioproject: PRJNA939699
 Information about data processing can be found under crisprHAL/data/processing.
 
 
-# 7: Citations
+## 7: Citations
 
 * Guo, J. et al. Improved sgRNA design in bacteria via genome-wide activity profiling. Nucleic acids research **46**, 7052–7069 (2018).
 * Abadi, M. et al. TensorFlow: Large-scale machine learning on heterogeneous systems (2015). Software available from tensorflow.org.
 * Fernandes, A. D. et al. Unifying the analysis of high-throughput sequencing datasets: characterizing RNA-seq, 16S rRNA gene sequencing and selective growth experiments by compositional data analysis. Microbiome **2**, 1–13 (2014).
 * Virtanen, P. et al. SciPy 1.0: fundamental algorithms for scientific computing in python. Nat. Methods **17**, 261–272 (2020).
 
-# 8: How to cite crisprHAL
+## 8: How to cite crisprHAL
 
 Ham, D.T., Browne, T.S., Banglorewala, P.N. et al. A generalizable Cas9/sgRNA prediction model using machine transfer learning with small high-quality datasets. **Nat Commun** *14*, 5514 (2023). https://doi.org/10.1038/s41467-023-41143-7
