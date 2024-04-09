@@ -89,7 +89,7 @@ python process_fasta.py phiX174.fna
 ## 3: Predict with model
 
 This will take the file of the predicted sgRNA sequences from above and assign a score. Higher scores are better!
-The output is a .csv file named OUTPUT_[inputfile] and contains the sgRNA and the score. ```Runtime: ~10 seconds (Expect +1-5 seconds/10000 target sites)```
+The output is a .csv file named OUTPUT_[inputfile] and contains the sgRNA and the score. ```Runtime: ~10 seconds [+2-4 seconds/10,000 sites]```
 
 * **Enzyme**: "TevSpCas9" or "SpCas9"
 * **Input**: CSV file input name; created in section 2 or matching the required format (Format: Section 4)
