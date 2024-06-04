@@ -2,8 +2,8 @@ import sys
 
 outname = sys.argv[1].split(".")
 inputfile = open(sys.argv[1],"r")
-outfile = open("sgRNA_inputs_" + outname[0] + ".csv","w+")
-print("\nPreparing the file: sgRNA_inputs_" + outname[0] + ".csv")
+outfile = open(outname[0] + "_sgRNAs.csv","w+")
+print("\nPreparing the file: " + outname[0] + "_sgRNAs.csv")
 outfile.write("sgRNAs\n")
 
 checkduplicates = []
@@ -52,7 +52,7 @@ if flag:
     print("Total sgRNAs found: " + str(forward+reverse))
     print("Total duplicate sites found: " + str(dups))
     print("Total unique sgRNAs found: " + str(forward+reverse-dups))
-    print("\nPlease use the file: sgRNA_inputs_" + outname[0] + ".csv as the input to crisprHAL.py")
+    print("\nPlease use the file: " + outname[0] + "_sgRNAs.csv as the input to crisprHAL.py")
 
 else:
     print("Multiple fasta sequences (lines beginning with '>') in one file is not currently supported.")
