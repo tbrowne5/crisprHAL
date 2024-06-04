@@ -43,7 +43,7 @@ tensorflow==2.4.0
 These can be instantiated within a conda environment: ```Time: 1-10 minutes```
 
 ```
-conda create --name HAL python=[ACTIVE VERSION]
+conda create --name HAL
 conda activate HAL
 conda install --file requirements.txt
 ```
