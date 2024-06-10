@@ -80,8 +80,8 @@ Example input file and run shown below with a phiX174 genome:
 TCGAGCATGCATCTAGAGGGCCCAATTCGCCCTATAGTGAGTCGTATTACAATTCACTGGCCGTCGTTTTACAACGTCGTGACTGGGAAAACCC
 ...etc
 
-# python process_fasta.py [Input Nucleotide File]
-python process_fasta.py phiX174.fna
+# python process_fasta.py [Input Nucleotide File] [Output CSV File]
+python process_fasta.py phiX174.fna phiX174_output.csv
 
 #output: phiX174_output.csv
 ```
