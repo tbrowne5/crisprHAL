@@ -6,6 +6,7 @@ inputfile = open(sys.argv[1],"r")
 outpath = sys.argv[2] # Better to allow for user to fully define output location
 outfile = open(outpath,"w+")
 print("\nPreparing the file: " + outpath)
+
 outfile.write("sgRNAs\n")
 
 forward = 0

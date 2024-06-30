@@ -43,7 +43,7 @@ tensorflow==2.4.0
 These can be instantiated within a conda environment: ```Time: 1-10 minutes```
 
 ```
-conda create --name HAL python=[ACTIVE VERSION]
+conda create --name HAL
 conda activate HAL
 conda install --file requirements.txt
 ```
@@ -99,8 +99,8 @@ The output is a .csv file named OUTPUT_[inputfile] and contains the sgRNA and th
 Example run with the phiX174 predicted sgRNA seqeunces
 ```
 # python crisprHAL.py [Enzyme] [Input file csv] [Optional compare]
-python crisprHAL.py TevSpCas9  phiX174_output.csv
-# output: OUTPUT_phiX174_output.csv
+python crisprHAL.py TevSpCas9  phiX174_sgRNAs.csv
+# output: OUTPUT_phiX174_sgRNAs.csv
 ```
 
 
