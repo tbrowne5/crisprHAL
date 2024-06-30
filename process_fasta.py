@@ -1,60 +1,54 @@
-import sys
+import sys, re,datetime
+from Bio.Seq import Seq
 
 outname = sys.argv[1].split(".")
 inputfile = open(sys.argv[1],"r")
-outfile = open(outname[0] + "_sgRNAs.csv","w+")
-print("\nPreparing the file: " + outname[0] + "_sgRNAs.csv")
+outpath = sys.argv[2] # Better to allow for user to fully define output location
+outfile = open(outpath,"w+")
+print("\nPreparing the file: " + outpath)
+
 outfile.write("sgRNAs\n")
 
-checkduplicates = []
 forward = 0
 reverse = 0
 dups = 0
 seq = ""
-revstr = ""
-flag = True
+seqs = [] # List to store DNA seq of each contig
 
 for line in inputfile:
-    if line[0] != ">": seq = seq + line.strip("\n").upper()
-    if line[0] == ">" and len(seq) > 0: flag = False
+    if line[0] != ">": 
+        seq = seq + line.strip("\n").upper()
+    if line[0] == ">" and len(seq) > 0: 
+        seqs.append(seq) # Add contig sequence to list
+        seq="" # Clear contig sequence to store next contig sequence
 
-if flag:          
-    for i in range(1,len(seq)+1):
-        if seq[len(seq)-i] == "A": revstr = revstr + "T"
-        if seq[len(seq)-i] == "C": revstr = revstr + "G"
-        if seq[len(seq)-i] == "G": revstr = revstr + "C"
-        if seq[len(seq)-i] == "T": revstr = revstr + "A"
+def find_sequences(dna_string):
+    # Use a regex pattern to find all occurrences of 'GG'
+    pattern = re.compile(r'(?=([ATCG]{21}GG[ATCG]{5}))') # Takes 21 upstream and 5 downstream nucleotides of GG
 
+    # Find all matches
+    matches = pattern.finditer(dna_string)
+
+    # Initialize an empty list to store the results
+    sequences = []
+
+    # Iterate over the matches to extract the sequences
+    for match in matches:
+        # Extract the sequence and add it to the list
+        sequence = dna_string[match.start(1):match.end(1)]
+        sequences.append(sequence)
+
+    return sequences
+
+full_seqs = [] # As you loop through contigs, add sgRNA seqs to this list
+for seq in seqs:          
+    revstr = Seq(seq).reverse_complement() # BioPython reverse complement for potential runtime boost
     seq = seq + seq[0:27]
-    revstr = revstr + revstr[0:27]
+    revstr = str(revstr) + str(revstr)[0:27]
+    full_seqs = full_seqs +find_sequences(seq) # add forward strand sgRNA
+    full_seqs = full_seqs +find_sequences(revstr) # add reverse strand sgRNA
 
-    for i in range(22,len(seq)-5):
-        if seq[i] == "G" and seq[i-1] == "G":
-            forward += 1
-            if seq[i-22:i+1] not in checkduplicates:
-                outfile.write(seq[i-22:i+6] + "\n")
-            else:
-                print("DUPLICATE: " + seq[i-22:i+1])
-                dups += 1
-            checkduplicates.append(seq[i-22:i+1])
-    for i in range(22,len(revstr)-5):
-        if revstr[i] == "G" and revstr[i-1] == "G":
-            reverse += 1
-            if revstr[i-22:i+1] not in checkduplicates:
-                outfile.write(revstr[i-22:i+6] + "\n")
-            else:
-                print("DUPLICATE: " + revstr[i-22:i+1])
-                dups += 1
-            checkduplicates.append(revstr[i-22:i+1])
-    
-    print("\nForward strand sgRNAs found: " + str(forward))
-    print("Reverse strand sgRNAs found: " + str(reverse))
-    print("Total sgRNAs found: " + str(forward+reverse))
-    print("Total duplicate sites found: " + str(dups))
-    print("Total unique sgRNAs found: " + str(forward+reverse-dups))
-    print("\nPlease use the file: " + outname[0] + "_sgRNAs.csv as the input to crisprHAL.py")
-
-else:
-    print("Multiple fasta sequences (lines beginning with '>') in one file is not currently supported.")
-
+dedup_seqs = list(set(full_seqs)) # by using set, you will deduplicate the sequences in one shot instead of testing at every loop iter
+for seq in dedup_seqs:
+    outfile.write(seq+"\n")
 outfile.close()
