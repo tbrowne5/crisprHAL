@@ -81,7 +81,7 @@ TCGAGCATGCATCTAGAGGGCCCAATTCGCCCTATAGTGAGTCGTATTACAATTCACTGGCCGTCGTTTTACAACGTCGT
 ...etc
 
 # python process_fasta.py [Input Nucleotide File] [Output CSV File]
-python process_fasta.py phiX174.fna phiX174_output.csv
+python process_fasta.py phiX174.fna phiX174_sgRNAs.csv
 
 #output: phiX174_output.csv
 ```
