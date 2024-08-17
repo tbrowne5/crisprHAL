@@ -21,6 +21,7 @@ for line in inputfile:
     if line[0] == ">" and len(seq) > 0: 
         seqs.append(seq) # Add contig sequence to list
         seq="" # Clear contig sequence to store next contig sequence
+seqs.append(seq) # Ensure last seq written
 
 def find_sequences(dna_string):
     # Use a regex pattern to find all occurrences of 'GG'
