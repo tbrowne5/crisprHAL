@@ -1,5 +1,5 @@
 ## crisprHAL: A suite of bacterial sgRNA/Cas9 activity prediction models
-Here you can find prediction models for bacterial SpCas9, TevSpCas9, eSpCas9, and SaCas9 nuclease activity prediction.
+Prediction models for bacterial SpCas9, TevSpCas9, eSpCas9, and SaCas9 nuclease activity prediction.
 
 ## The crisprHAL series papers, paper repositories, and web tool:
 #### [The up-to-date crisprHAL repository](https://github.com/tbrowne5/crisprHAL)
