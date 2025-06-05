@@ -15,7 +15,7 @@ If you wish to run the model on your own nucleotide sequence follow parts 0 to 3
 
 If you wish to validate the training of a model, follow parts 4 to 5.
 
-Validation of a paper-specific model can be performed through the above links.
+As this repository contains the most up-to-date models, if you wish to test a model from a specific paper, please use the paper-specific repository link listed above.
 
 ## Sections of this guide:
 
