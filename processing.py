@@ -15,7 +15,7 @@ class processing:
         for sequence in nucleotideEncoding: onehotencoding.append(np.array([nt_to_ohe_dict[nt.upper()] for nt in sequence]))
         return np.array(onehotencoding)
 
-    def find_targets(self, sequence, inputParameters, circular=True):
+    def find_targets(self, sequence, inputParameters, circular=True, reverseComplement=True):
         
         if len(sequence) < inputParameters[0]:
             print(f"Error: Input sequence '{sequence}' is shorter than the required length of {inputParameters[0]} bases.")
@@ -33,9 +33,20 @@ class processing:
                     else:
                         print(len(target))
                         break
+            # Find NGG targets in reverse complement
+            if reverseComplement:
+                sequence = sequence[::-1].translate(str.maketrans("ACGT", "TGCA"))
+                for i in range(20+inputParameters[1], len(sequence) - inputParameters[2] + 1):
+                    if sequence[i+1:i+3] == "GG":
+                        target = sequence[i-(20+inputParameters[1]):i+inputParameters[2]]
+                        if len(target) == inputParameters[0]:
+                            targets.append(target)
+                        else:
+                            print(len(target))
+                            break
             return targets
 
-    def process_fasta(self, fastaFile, inputParameters=[37, 3, 14], circular=True):
+    def process_fasta(self, fastaFile, inputParameters=[37, 3, 14], circular=True, reverseComplement=True):
         
         # Read the FASTA file
         inputSequences = []
@@ -44,12 +55,12 @@ class processing:
             for line in file:
                 if line.startswith('>'):
                     if len(sequence) > 0:
-                        inputSequences += self.find_targets(sequence, inputParameters, circular)
+                        inputSequences += self.find_targets(sequence, inputParameters, circular, reverseComplement)
                         # ALSO NEED TO ADD IN THE REVERSE COMPLEMENT OF THE SEQUENCE
                         sequence = ""
                 else:
                     sequence += line.strip()
-            inputSequences += self.find_targets(sequence, inputParameters, circular)
+            inputSequences += self.find_targets(sequence, inputParameters, circular, reverseComplement)
         
         print(f"Found {len(inputSequences)} target sequences in the FASTA file.")
         return inputSequences, self.onehotencode(inputSequences), None
@@ -105,7 +116,7 @@ class processing:
         # Calculate Spearman and Pearson correlations
         predictions = np.array(predictions).flatten()
         spearman_corr, _ = spearmanr(predictions, actual, axis=0)
-        pearson_corr, _ = pearsonr(predictions, actual)
+        pearson_corr, _ = pearsonr(predictions, actual, axis=0)
 
         if message is not None: print(message)
 
