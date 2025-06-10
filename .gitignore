@@ -1,0 +1,7 @@
+.RData
+.Rhistory
+__pycache__/*
+*.pyc
+*.pyo
+*.pyd
+*predictions.csv
