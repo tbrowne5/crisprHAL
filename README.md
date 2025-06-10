@@ -163,11 +163,10 @@ This will assess whether the training model is working. It will not change the m
 
 ## 6: Data availability and processing
 
-Raw sequence reads from which the TevSpCas9 and SpCas9 datasets are derived are available at: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA939699
+Raw sequence reads from which the datasets are derived are available at: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA939699 and https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1260991
 
 NCBI SRA Bioproject: PRJNA939699
-
-Information about data processing can be found under crisprHAL/data/processing.
+NCBI SRA BioProject: PRJNA1260991
 
 
 ## 7: Citations
