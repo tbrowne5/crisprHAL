@@ -11,7 +11,12 @@ The up-to-date models for bacterial SpCas9, TevSpCas9, eSpCas9, and SaCas9 nucle
 * [crisprHAL SpCas9 paper repository](https://github.com/tbrowne5/A-generalizable-Cas9-sgRNA-prediction-model-using-machine-transfer-learning)
 * [crisprHAL SpCas9 publication](https://doi.org/10.1038/s41467-023-41143-7)
 
-The CRISPR/Cas9 nuclease from Streptococcus pyogenes (SpCas9) can be used with single guide RNAs (sgRNAs) as a sequence-specific antimicrobial agent and as a genome-engineering tool. However, current bacterial sgRNA activity models poorly predict SpCas9/sgRNA activity and are not generalizable, possibly because the underlying datasets used to train the models do not accurately measure SpCas9/sgRNA cleavage activity and cannot distinguish cleavage activity from toxicity. We solved this problem by using a two-plasmid positive selection system to generate high-quality biologically-relevant data that more accurately reports on SpCas9/sgRNA cleavage activity and that separates activity from toxicity. We developed a new machine learning architecture (crisprHAL) that can be trained on existing datasets and that shows marked improvements in sgRNA activity prediction accuracy when transfer learning is used with small amounts of high-quality data. The crisprHAL model recapitulates known SpCas9/sgRNA-target DNA interactions and provides a pathway to a generalizable sgRNA bacterial activity prediction tool.
+## Available Prediction Models:
+
+* crisprHAL Tev: ```-m TevSpCas9``` for SpCas9 and TevSpCas9 activity prediction
+* crisprHAL eSp: ```-m eSpCas9``` for eSpCas9 activity prediction
+* crisprHAL Sa: ```-m TevSpCas9``` for SaCas9 and TevSaCas9 activity prediction
+* crisprHAL WT: ```-m WT-SpCas9``` a secondary SpCas9 prediction model
 
 ## QUICK START
 
