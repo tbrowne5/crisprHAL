@@ -1,211 +1,101 @@
-
-import numpy as np
-import pandas as p
-import tensorflow as tf
-import tensorflow.keras as k
-from tensorflow.keras.layers import Dropout, MaxPooling1D, Dropout
-from sklearn.model_selection import train_test_split, KFold
-from Bio.SeqUtils import MeltingTemp as mt  
-from scipy.stats import spearmanr
-from statistics import stdev
+import sys
 import os
 
-import sys
+os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+os.environ["CUDA_VISIBLE_DEVICES"] = "3"
+os.environ["TF_GPU_ALLOCATOR"] = "cuda_malloc_async" # may need: export TF_GPU_ALLOCATOR=cuda_malloc_async
 
-import encoder as e
+from model import models, modelVersionDefaultEpochs
+from processing import processing
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "1" 
-tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
+training = False
+modelName = "TEVSPCAS9"
+modelNames = ["TEVSPCAS9","TEVCAS9", "TEV", "SPCAS9", "WTSPCAS9", "WT-SPCAS9", "WILD-TYPE-SPCAS9","WILD-TYPE","WILDTYPE", "WT", "ESPCAS9", "ESP"]
+epochs = None
+inputFile = None
+outputFile = None
+compare = False
+circularInput = False
+summary = False
 
-def get_melt_temp(data):
-    return np.array([mt.Tm_NN(guide) for guide in data.index])
+# PERHAPS MOVE THIS TO PROCESSING AND HAVE A VERY SIMPLE CRISPRHAL.PY FILE!!!
 
-def prepare_data_for_input(data, encoder=None, encoded_name=None, seqpadup=10, seqpaddown=5):
-    if encoder:
-        data[encoded_name] = [encoder.encode("A"*seqpadup + guide + "A"*seqpaddown) for guide in data.index]
-    return data
+def parse_args(args):
+    global training, modelName, modelNames, epochs, inputFile, outputFile, compare, circularInput
 
-def formatinputs(dataframe_input):
-    selective=dataframe_input
-    nrows, ncols = selective.shape
-    temps = get_melt_temp(selective)
-    long_temps = np.repeat(temps, ncols)
-    selective = prepare_data_for_input(selective, e.BinaryEncoder, 'Binary', seqpadup=10, seqpaddown=5)
-    binary_guides = np.repeat(selective.pop('Binary'),ncols)
-    xprior = np.array([np.array(guide, dtype=np.float64) for guide in binary_guides])
-    y_train = selective.values.reshape((nrows*ncols),)
-    X_train = np.zeros((len(xprior),len(xprior[0]),5))
-    for i in range(0, len(xprior)):
-        for j in range(0, len(X_train[0])): 
-            X_train[i][j] = np.append(xprior[i][j], long_temps[i]/100)
-    y_train = np.array(y_train.astype(float))    
-    return X_train, y_train
-
-def get_ttsplit(data,ttsplitstate=1,tst_size=0.2,return_pre_format_values=False,prediction=False):
-    dataset = p.read_csv(data, header=None, skiprows=0,).dropna(how="all")
-    if prediction: dataset['scores'] = 0
-    nparray = dataset.to_numpy()
-    nparray = nparray[1:]
-    if tst_size==0:
-        df_all = p.DataFrame(data=nparray[:,1:],index=nparray[:,0])
-        X_all,y_all=formatinputs(df_all)
-        if return_pre_format_values==False: return X_all,y_all
-        else: return df_all,X_all,y_all
-    else:
-        All_train, All_test = train_test_split( nparray, test_size=tst_size, random_state=ttsplitstate)
-        df_train = p.DataFrame(data=All_train[:,1:],index=All_train[:,0])
-        df_test = p.DataFrame(data=All_test[:,1:],index=All_test[:,0])
-        X_train,y_train=formatinputs(df_train)
-        X_test,y_test=formatinputs(df_test)
-        if return_pre_format_values==False: return X_train, X_test, y_train, y_test
-        else: return df_train, df_test, X_train, X_test, y_train, y_test
-
-def write_prediction(y_pred, df_test, predictionfilename):
-    predictionwrite = open(predictionfilename,"w+")
-    np_train = df_test.index.to_numpy()
-    outputreturn = {}
-    predictionwrite.write("sgRNA,28nt_model_input,score\n")
-    for i in range(0,len(np_train)): outputreturn[np_train[i]] = str(format(float(y_pred[i]), '.8f')).replace(' [','').replace('[', '').replace(']', '')
-    for item in dict(sorted(outputreturn.items(), key=lambda item: float(item[1]), reverse=True)): predictionwrite.write(str(item[0:20]) + "," + str(item) + "," + str(outputreturn[item]) + "\n")
-    predictionwrite.close()
-    return dict(sorted(outputreturn.items(), key=lambda item: item[1], reverse=True))
-
-def main(fileoutput="NULL", train=False, compare=False, model="Tev", inputdata="X", seqstart=10, seqend=38, drop_rate=0.3, CNN_filters=128, window_size=3, CNN_drop=0.3, conv1D_padding="same", CNN_dense1=128, CNN_dense2=64, maxpool1D_padding="same", RNN_size=128, RNN_dense1=128, RNN_dense2=64, CNN_RNN_drop=0.3):
-
-    if train:
-        if inputdata.lower()=="espcas9":
-            i = k.Input(shape=(43,5), name="Input")
-
-            # Seqstart and seqend variables used to identify optimal sequence length for model performance
-            x = i[:,seqstart:seqend,0:4]
-
-            # Multi-layer CNN
-            c1 = k.layers.Conv1D(CNN_filters,window_size,padding=conv1D_padding, name="c1")(x)
-            l1 = k.layers.LeakyReLU(name="l1")(c1)
-            p1 = MaxPooling1D(pool_size=2,padding=maxpool1D_padding, name="p1")(l1)
-            dr1 = Dropout(CNN_drop, name="dr1")(p1)
-
-            c2 = k.layers.Conv1D(CNN_filters,window_size,padding=conv1D_padding, name="c2")(dr1)
-            l2 = k.layers.LeakyReLU(name="l2")(c2)
-            p2 = MaxPooling1D(pool_size=2,padding=maxpool1D_padding, name="p2")(l2)
-            dr2 = Dropout(CNN_drop, name="dr2")(p2)
-
-            c3 = k.layers.Conv1D(CNN_filters,window_size,padding=conv1D_padding, name="c3")(dr2)
-            l3 = k.layers.LeakyReLU(name="l3")(c3)
-            p3 = MaxPooling1D(pool_size=2,padding=maxpool1D_padding, name="p3")(l3)
-            dr3 = Dropout(CNN_drop, name="dr3")(p3)
-            
-            c4 = k.layers.Conv1D(CNN_filters,window_size,padding=conv1D_padding, name="c4")(dr3)
-            l4 = k.layers.LeakyReLU(name="l4")(c4)
-            p4 = MaxPooling1D(pool_size=2,padding=maxpool1D_padding, name="p4")(l4)
-            dr4 = Dropout(CNN_drop, name="dr4")(p4)
-
-            f = k.layers.Flatten(name="f")(dr4)
-
-            d1 = k.layers.Dense(CNN_dense1, name="d1")(f)
-            ld1 = k.layers.LeakyReLU(name="ld1")(d1)
-            drd1 = Dropout(CNN_drop, name="drd1")(ld1)
-            d2 = k.layers.Dense(CNN_dense2, name="d2")(drd1)
-            ld2 = k.layers.LeakyReLU(name="ld2")(d2)
-            drd2 = Dropout(CNN_drop, name="drd2")(ld2)
-            x_1d_o = k.layers.Dense(1, name="x_1d_o")(drd2)
-
-            # Bidirectional Gated Recurrent Unit Branch
-            r1 = k.layers.Bidirectional(k.layers.GRU(RNN_size, kernel_initializer='he_normal', dropout=drop_rate, recurrent_dropout=0.2), name="r1")(dr1)
-            
-            f_LSTM = k.layers.Flatten(name="f_LSTM")(r1)
-            
-            d1_LSTM = k.layers.Dense(RNN_dense1, name="d1_LSTM")(f_LSTM)
-            ld1_LSTM = k.layers.LeakyReLU(name="ld1_LSTM")(d1_LSTM)
-            drd1_LSTM = Dropout(CNN_RNN_drop, name="drd1_LSTM")(ld1_LSTM)
-            d2_LSTM = k.layers.Dense(RNN_dense2, name="d2_LSTM")(drd1_LSTM)
-            ld2_LSTM = k.layers.LeakyReLU(name="ld2_LSTM")(d2_LSTM)
-            drd2_LSTM = Dropout(CNN_RNN_drop, name="drd2_LSTM")(ld2_LSTM)
-            x_LSTM_o = k.layers.Dense(1, name="x_LSTM_o")(drd2_LSTM)
-            
-            # Concatenated Output Layers
-            o_c = k.layers.concatenate([x_1d_o,x_LSTM_o], axis=1, name="o_c")
-            o = k.layers.Dense(1, activation="linear", name="o")(o_c)
-
-            # Model Initiation
-            m = k.Model(inputs=i, outputs=o)
-            compile_options={"optimizer": "adam", "loss": "mean_squared_error"}
-            m.compile(**compile_options)
-
-            # Training the eSpCas9 data model from which the TevSpCas9 & SpCas9 models transfer learn
-            dataX_train, dataX_test, datay_train, datay_test = get_ttsplit("data/eSpCas9.csv",1,0.2)
-            m.fit(dataX_train,datay_train,epochs=40,batch_size=200,verbose=1)
-            result = spearmanr(m.predict(dataX_test),datay_test,axis=0)
-            print("\nSpearman ranked correlation coefficient: " + str(result[0]))
-      
-        else:
-            # Test the model with TevSpCas9 data under 5-fold cross validation
-            if "tev" in indata.lower(): enzyme="TevSpCas9"
-            # Test the model with SpCas9 data under 5-fold cross validation
-            elif "cas9" in indata.lower(): enzyme="SpCas9"
-            else: print("ERROR: Invalid training option, please choose one of: TevSpCas9, SpCas9, or eSpCas9.")
-            
-            dataX, datay = get_ttsplit("data/" + enzyme + "/" + enzyme + ".csv",1,0)
-            print("\nTesting the " + enzyme + " model\n")
-
-            kf = KFold(n_splits=5, shuffle=True, random_state=1)
-            results=[]
-            compile_options={"optimizer": "adam", "loss": "mean_squared_error"}
-
-            # Running the 5-fold cross validation procedure
-            for train_index, test_index in kf.split(dataX):
-                cvX_train, cvX_test = dataX[train_index], dataX[test_index]
-                cvy_train, cvy_test = datay[train_index], datay[test_index]
-                m = k.models.load_model("data/" + enzyme + "/basemodel.h5")
-                for i in range(0,len(m.layers)):
-                    if i not in [18, 22, 28, 34, 35]:
-                        m.layers[i].trainable = False
-                m.compile(**compile_options)
-                m.fit(cvX_train, cvy_train, epochs=4, batch_size=20, verbose=0)
-                result = spearmanr(m.predict(cvX_test, verbose=1),cvy_test)
-                results.append(result[0])
-                print(result)
-            print("\nMean 5-fold cross validation score: " + str(sum(results)/5))
-            print("Standard deviation of scores: " + str(stdev(results)))
-            print("\nMeasurement performed by Spearman ranked correlation coefficient")
-    else:
-        # Load either the TevSpCas9 or SpCas9 model
-        if "tev" in model.lower(): enzyme="TevSpCas9"
-        elif "cas9" in model.lower() and "tev" not in model.lower() and "espcas9" not in model.lower(): enzyme="SpCas9"
-        else: print("ERROR: No correct model specified, please choose either: TevSpCas9 or SpCas9")
-        print("\nRunning the " + enzyme + " model\n")
-        m = k.models.load_model("data/" + enzyme + "/" + enzyme + ".h5")
-
-        # Comparison of the model predictions to prior scores
-        if compare:
-            input_data, input_Xall, input_yall = get_ttsplit(inputdata,1,0,True)
-            input_pred = m.predict(input_Xall, verbose=1)
-            spearman_corr = spearmanr(input_pred,input_yall,axis=0)
-            print("Spearman ranked correlation coefficient: " + str(spearman_corr[0]) + "\n")
-        # No comparison, only perform model prediction
-        else:
-            input_data, input_Xall, input_yall = get_ttsplit(inputdata,1,0,True,prediction=True)
-            input_pred = m.predict(input_Xall, verbose=1)
-        if fileoutput != "NULL":
-            output = write_prediction(input_pred, input_data, fileoutput)
-            top=1
-            for item in output:
-                print("#" + str(top) + " sgRNA: " + str(item[0:20]) + "\t\t28nt model input: " + str(item) + ", score: " + str(output[item]))
-                top+=1
-                if top > 5: break
+    for i in range(len(args)):
+        if args[i] == "--train" or args[i] == "-t": training = True
+        elif args[i] == "--input" or args[i] == "-i": inputFile = args[i + 1]
+        elif args[i] == "--output" or args[i] == "-o": outputFile = args[i + 1]
+        elif args[i] == "--circular": circularInput = True
+        elif args[i] == "--compare" or args[i] == "-c": compare = True
+        elif args[i] == "--epochs" or args[i] == "-e": epochs = int(args[i + 1])
+        elif args[i] == "--summary" or args[i] == "-s": summary = True
+        elif args[i] == "--model" or args[i] == "-m" or args[i] == "--enzyme":
+            if args[i + 1].upper() in modelNames:
+                if args[i + 1].upper() in ["TEVSPCAS9","TEVCAS9", "TEV", "SPCAS9"]: modelName = "TEVSPCAS9"
+                if args[i + 1].upper() in ["WT-SPCAS9", "WILD-TYPE-SPCAS9","WILD-TYPE","WILDTYPE", "WT"]: modelName = "WT-SPCAS9"
+                if args[i + 1].upper() in ["ESPCAS9", "ESP"]: modelName = "ESPCAS9"
+            else:
+                print(f"Error: Model '{args[i + 1]}' is not recognized. Available models: TevSpCas9, eSpCas9, and WT-SpCas9.\nFor up-to-date and other models including SaCas9 please use: github.com/tbrowne5/crisprHAL")
+                sys.exit(1)
+        elif args[i] == "--help" or args[i] == "-h":
+            print("Thank you for using crisprHAL. This program offers bacterial sgRNA/Cas9 activity predictions for several nucleases. For typical use please provide a fasta file input (.fasta/.fa).")
+            print("\nThe nuclease options are:\n  • SpCas9: Streptococcus pyogenes Cas9 with NGG PAM\n  • TevSpCas9: I-TevI linker SpCas9 dual nuclease with NGG PAM\n  • eSpCas9: enhanced Specificity SpCas9 with NGG PAM\n  • SaCas9: Staphylococcus aureus Cas9 with NNGRRN PAM\n  • TevSaCas9: I-TevI linker SaCas9 dual nuclease with NGG PAM\n")
+            print("Usage: python crisprHAL.py [options]")
+            print("Options:")
+            print("  --model, -m   [Nuclease]                Specify the model name (default: TevSpCas9)")
+            print("  --input, -i   [Input file path]         Input file for prediction (fasta, csv, or tsv)")
+            print("  --output, -o  [Output file path]        Output file for prediction results")
+            print("  --circular                              Process fasta as a circular input sequence")
+            print("  --compare, -c                           Compare predictions with scores in the input file second column")
+            print("  --train, -t                             Train the model specified")
+            print("  --epochs, -e  [Integer epoch value]     Specify number of epochs for training (default: model-specific)")
+            print("  --summary, -s                           Print the model architecture summary")
+            print("  --help, -h                              Show this help message")
+            sys.exit(0)
     
-    k.backend.clear_session()
+    if training == True and inputFile is not None:
+        print("Error: Please specify either training mode or an input file for prediction generation.")
+        sys.exit(1)
 
-compare=False
-train=False
-if len(sys.argv) > 1:
-    modelname=str(sys.argv[1])
-    if modelname.lower()=="train": train=True
-    if len(sys.argv) > 2: indata=str(sys.argv[2])
-    if len(sys.argv) > 3 and "compare" in str(sys.argv[3]).lower(): compare=True
-    outfile="output_" + indata
-    main(inputdata=indata,model=modelname,fileoutput=outfile,compare=compare,train=train)
-else:
-    print("\nBeginning the crisprHAL.py model test\nTesting on an example SpCas9 dataset of 7821 sgRNAs from Guo et al. 2018")
-    main(inputdata="test_dataset.csv",model="TevSpCas9",fileoutput="Output_TevSpCas9_test_dataset.csv",compare=True,train=False)
-    main(inputdata="test_dataset.csv",model="SpCas9",fileoutput="Output_SpCas9_test_dataset.csv",compare=True,train=False)
+# Read in arguments
+# If no input specified, use default hold-out test set
+# If no output specified, but input specified, strip file type annd add _predictions.csv
+
+def run_model():
+    global training, modelName, inputFile, outputFile, compare, epochs, circularInput
+
+    process = processing()
+    model = models(modelName, summary)
+    
+    if training:
+        print("Training model")
+        trainingData = process.read_training_data(modelName)
+        testingData = process.read_testing_data(modelName)
+        if epochs is None: epochs = modelVersionDefaultEpochs[modelName]
+        for i in range(0,epochs):
+            model.train(trainingData[1], trainingData[2], epochs=1, batch_size=1024, verbose=1)
+            process.compare_predictions(model.predict(testingData[1]), testingData[2], message=f"Epoch {i+1} on hold-out test set for {modelName}:")
+    else:
+        # Model name provides input sequence length for processing
+        # If inputFile default of "None" is passed, the hold-out test set will be used instead
+        # The compare flag indicates that the input file contains a second column of scores to be used for comparison
+        if inputFile is None: compare = True
+        print(f"{modelName} {inputFile} {compare} {circularInput}")
+        inputSequences, encodedInputSequences, inputScores = process.read_input(modelName, inputFile, compare, circularInput)
+        print(len(inputSequences))
+        print(encodedInputSequences.shape)
+        model.load_model(modelName)
+        predictions= model.predict(encodedInputSequences)
+        #print(predictions.shape)
+        print(outputFile)
+        print(inputFile)
+        if compare:
+            # Compare predictions with the second column of scores in the input file
+            process.compare_predictions(predictions, inputScores)
+        process.write_predictions(inputSequences, predictions, outputFile, inputFile, inputScores)
+
+if __name__ == "__main__":
+    parse_args(sys.argv[1:])
+    run_model()
