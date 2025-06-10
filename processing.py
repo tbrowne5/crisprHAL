@@ -1,7 +1,7 @@
 
 import numpy as np
 from scipy.stats import spearmanr, pearsonr
-from model import modelVersionInputLength, modelVersionTrainingData, modelVersionTestingData
+from models import modelVersionInputLength, modelVersionTrainingData, modelVersionTestingData
 
 class processing:
     
