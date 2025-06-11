@@ -5,10 +5,10 @@ from tensorflow.keras.layers import Input, Dense, Conv1D, MaxPooling1D, Conv2D, 
 from tensorflow.keras.models import Model
 
 modelVersionInputLength = {
-    "TEVSPCAS9": [37, 3, 14],
-    "ESPCAS9": [406, 193, 193],
-    "WT-SPCAS9": [378, 189, 169],
-    "TEVSACAS9": [29, 1, 8]
+    "TEVSPCAS9": [37, 3, 14, 0],
+    "ESPCAS9": [406, 193, 193, 0],
+    "WT-SPCAS9": [378, 189, 169, 0],
+    "TEVSACAS9": [29, 1, 8, 1]
     }
 
 modelVersionPath = {
