@@ -139,10 +139,10 @@ class models:
     def load_model(self, modelName, path="."):
         path = path.strip("/")
         try:
-            self.model = k.models.load_model(path + modelVersionPath[modelName])
+            self.model = k.models.load_model(path + "/" + modelVersionPath[modelName])
             print(f"Loaded the model from the path: {path}/{modelVersionPath[modelName]}")
         except Exception as e:
-            print(f"ERROR: There was an issue loading the model: {path}/{modelVersionPath[modelName]}\n{e}") 
+            print(f"ERROR: There was an issue loading the model: {path}/{modelVersionPath[modelName]}\n{e}")
     
     def compile(self):
         try:
