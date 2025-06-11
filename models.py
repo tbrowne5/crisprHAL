@@ -12,9 +12,9 @@ modelVersionInputLength = {
     }
 
 modelVersionPath = {
-    "TEVSPCAS9": "models/TevSpCas9.keras",
-    "ESPCAS9": "models/eSpCas9.keras",
-    "WT-SPCAS9": "models/WT-SpCas9.keras",
+    "TEVSPCAS9": "models/TEVSPCAS9.keras",
+    "ESPCAS9": "models/ESPCAS9.keras",
+    "WT-SPCAS9": "models/WT-SPCAS9.keras",
     "TEVSACAS9": "models/TEVSACAS9.h5"
     }
 
