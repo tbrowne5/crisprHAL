@@ -78,15 +78,10 @@ def run_model():
         # If inputFile default of "None" is passed, the hold-out test set will be used instead
         # The compare flag indicates that the input file contains a second column of scores to be used for comparison
         if inputFile is None: compare = True
-        print(f"{modelName} {inputFile} {compare} {circularInput}")
         inputSequences, encodedInputSequences, inputScores = process.read_input(modelName, inputFile, compare, circularInput)
         print(len(inputSequences))
-        print(encodedInputSequences.shape)
         model.load_model(modelName)
         predictions= model.predict(encodedInputSequences)
-        #print(predictions.shape)
-        print(outputFile)
-        print(inputFile)
         if compare:
             # Compare predictions with the second column of scores in the input file
             process.compare_predictions(predictions, inputScores)
