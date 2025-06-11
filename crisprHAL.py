@@ -5,7 +5,7 @@ from processing import processing
 
 training = False
 modelName = "TEVSPCAS9"
-modelNames = ["TEVSPCAS9","TEVCAS9", "TEV", "SPCAS9", "WTSPCAS9", "WT-SPCAS9", "WILD-TYPE-SPCAS9","WILD-TYPE","WILDTYPE", "WT", "ESPCAS9", "ESP"]
+modelNames = ["TEVSPCAS9","TEVCAS9", "TEV", "SPCAS9", "WTSPCAS9", "WT-SPCAS9", "WILD-TYPE-SPCAS9","WILD-TYPE","WILDTYPE", "WT", "ESPCAS9", "ESP","TEVSACAS9","SACAS9","SACAS","SA"]
 epochs = None
 inputFile = None
 outputFile = None
@@ -31,6 +31,7 @@ def parse_args(args):
                 if args[i + 1].upper() in ["TEVSPCAS9","TEVCAS9", "TEV", "SPCAS9"]: modelName = "TEVSPCAS9"
                 if args[i + 1].upper() in ["WT-SPCAS9", "WILD-TYPE-SPCAS9","WILD-TYPE","WILDTYPE", "WT"]: modelName = "WT-SPCAS9"
                 if args[i + 1].upper() in ["ESPCAS9", "ESP"]: modelName = "ESPCAS9"
+                if arge[i + 1].upper() in ["TEVSACAS9","SACAS9","SACAS","SA"]: modelName = "TEVSACAS9"
             else:
                 print(f"Error: Model '{args[i + 1]}' is not recognized. Available models: TevSpCas9, eSpCas9, and WT-SpCas9.\nFor up-to-date and other models including SaCas9 please use: github.com/tbrowne5/crisprHAL")
                 sys.exit(1)
