@@ -21,12 +21,20 @@ class processing:
             print(f"Error: Input sequence '{sequence}' is shorter than the required length of {inputParameters[0]} bases.")
             return []
         else:
+            pam=["GG"]
+            pamStart=1
+            pamEnd=3
+            if inputParameters[3] == 1:
+                # Specifies SaCas9 NNGRRN PAM
+                pam=["GGG","GGA","GAG","GAA"]
+                pamStart=2
+                pamEnd=5
             sequence = sequence.upper().replace("U", "T").replace(" ", "").replace("\n", "")
             if circular: sequence = sequence + sequence[:inputParameters[0] - 1]
             targets = []
             # Find NGG targets
             for i in range(20+inputParameters[1], len(sequence) - inputParameters[2] + 1):
-                if sequence[i+1:i+3] == "GG":
+                if sequence[i+pamStart:i+pamEnd] in pam:
                     target = sequence[i-(20+inputParameters[1]):i+inputParameters[2]]
                     if len(target) == inputParameters[0]:
                         targets.append(target)
@@ -37,7 +45,7 @@ class processing:
             if reverseComplement:
                 sequence = sequence[::-1].translate(str.maketrans("ACGT", "TGCA"))
                 for i in range(20+inputParameters[1], len(sequence) - inputParameters[2] + 1):
-                    if sequence[i+1:i+3] == "GG":
+                    if sequence[i+pamStart:i+pamEnd] in pam:
                         target = sequence[i-(20+inputParameters[1]):i+inputParameters[2]]
                         if len(target) == inputParameters[0]:
                             targets.append(target)
@@ -46,7 +54,7 @@ class processing:
                             break
             return targets
 
-    def process_fasta(self, fastaFile, inputParameters=[37, 3, 14], circular=True, reverseComplement=True):
+    def process_fasta(self, fastaFile, inputParameters=[37, 3, 14, 0], circular=True, reverseComplement=True):
         
         # Read the FASTA file
         inputSequences = []
