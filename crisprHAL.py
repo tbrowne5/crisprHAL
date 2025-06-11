@@ -16,7 +16,7 @@ summary = False
 # PERHAPS MOVE THIS TO PROCESSING AND HAVE A VERY SIMPLE CRISPRHAL.PY FILE!!!
 
 def parse_args(args):
-    global training, modelName, modelNames, epochs, inputFile, outputFile, compare, circularInput
+    global training, modelName, modelNames, epochs, inputFile, outputFile, compare, circularInput, summary
 
     for i in range(len(args)):
         if args[i] == "--train" or args[i] == "-t": training = True
@@ -60,7 +60,7 @@ def parse_args(args):
 # If no output specified, but input specified, strip file type annd add _predictions.csv
 
 def run_model():
-    global training, modelName, inputFile, outputFile, compare, epochs, circularInput
+    global training, modelName, inputFile, outputFile, compare, epochs, circularInput, summary
 
     process = processing()
     model = models(modelName, summary)
