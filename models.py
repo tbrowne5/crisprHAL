@@ -36,7 +36,7 @@ modelVersionDefaultEpochs = {
     "TEVSPCAS9": 85,
     "ESPCAS9": 74,
     "WT-SPCAS9": 48,
-    "TEVSACAS9": "100"
+    "TEVSACAS9": 100
     }
 
 class models:
