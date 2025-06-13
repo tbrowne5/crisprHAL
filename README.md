@@ -75,6 +75,7 @@ Success here is that the model runs without error, showing that it is installed 
 ```
 python crisprHAL.py [options]
 ```
+Options:
 ```
 --model, -m   [TevSpCas9, eSpCas9, WT-SpCas9]
 ```
