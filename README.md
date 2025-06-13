@@ -166,6 +166,21 @@ Predict using the command: ```python crisprHAL.py -i [fileName.csv] -c``` with o
 
 This will assess whether the training model is working. It will not change the model used for predictions.
 
+Train the model for the model-specific default number of epochs. If no model is specified, crisprHAL Tev (TevSpCas9) will be trained.
+```
+python crisprHAL.py -t -m [modelName]
+```
+
+Traing the model for a specific number of epochs:
+```
+python crisprHAL.py -t -m [modelName] -e [integerValueForTrainingEpochs]
+```
+
+Example: train crisprHAL eSp (eSpCas9) for 50 epochs:
+```
+python crisprHAL.py -m eSpCas9 -t -e 50
+```
+
 
 ## 6: Data availability and processing
 
