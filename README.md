@@ -3,7 +3,7 @@ The up-to-date models for bacterial SpCas9, TevSpCas9, eSpCas9, and SaCas9 nucle
 
 ## Links to the crisprHAL repositories, papers, and web tool:
 * [Up-to-date crisprHAL prediction tool for use](https://github.com/tbrowne5/crisprHAL) — **YOU ARE HERE**
-* [Online crisprHAL prediction tool](https://crisprhal.streamlit.app/)
+* [Online crisprHAL prediction tool](https://crisprhal.streamlit.app/) ([Repository](https://github.com/tbrowne5/crisprHAL_streamlit))
 * [crisprHAL 2.0 paper repository](https://github.com/tbrowne5/Better-data-for-better-predictions-data-curation-improves-deep-learning-for-sgRNA-Cas9-prediction/)
 * crisprHAL 2.0 pre-print (Available soon)
 * [crisprHAL SaCas9 paper repository](https://github.com/tbrowne5/Adenine-methylated-PAM-sequences-inhibit-SaCas9-activity)
