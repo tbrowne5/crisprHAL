@@ -15,7 +15,7 @@ The up-to-date models for bacterial SpCas9, TevSpCas9, eSpCas9, and SaCas9 nucle
 
 * SpCas9: ```-m SpCas9``` for SpCas9 and TevSpCas9 activity prediction
 * eSpCas9: ```-m eSpCas9``` for eSpCas9 activity prediction
-* SaCas9: ```-m TevSpCas9``` for SaCas9 and TevSaCas9 activity prediction
+* SaCas9: ```-m TevSpCas9``` for SaCas9 and TevSaCas9 activity prediction (**In-Progress**)
 * WT-SpCas9: ```-m WT-SpCas9``` a secondary SpCas9 prediction model
 
 ## QUICK START
