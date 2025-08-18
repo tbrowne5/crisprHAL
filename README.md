@@ -207,6 +207,8 @@ NCBI SRA BioProject: PRJNA450978
 
 ## 8: How to cite crisprHAL
 
-Browne, T.S., et al. Better data for better predictions: data curation improves deep learning for sgRNA/Cas9 prediction. **BioRxiv**, (Pre-Print). https://doi.org/10.1101/2025.06.24.661356
+Browne, T.S., et al. Better data for better predictions: data curation improves deep learning for sgRNA/Cas9 prediction. **BioRxiv**. (Pre-Print) https://doi.org/10.1101/2025.06.24.661356
+
+Ham, D.T., Browne, T.S., et al. PAM adenine methylation and flanking sequence regulate SaCas9 activity in bacteria. **BioRxiv**. (Pre-Print) https://doi.org/10.1101/2025.08.13.670096
 
 Ham, D.T., Browne, T.S., Banglorewala, P.N. et al. A generalizable Cas9/sgRNA prediction model using machine transfer learning with small high-quality datasets. **Nat Commun** *14*, 5514 (2023). https://doi.org/10.1038/s41467-023-41143-7
