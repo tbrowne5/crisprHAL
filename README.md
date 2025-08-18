@@ -6,7 +6,7 @@ The up-to-date models for bacterial SpCas9, TevSpCas9, eSpCas9, and SaCas9 nucle
 </p>
 
 ## Links to the crisprHAL repositories, papers, and web tool:
-* [Up-to-date crisprHAL prediction tool for use](https://github.com/tbrowne5/crisprHAL) — **YOU ARE HERE**
+* [Up-to-date crisprHAL prediction tool repository for use](https://github.com/tbrowne5/crisprHAL) — **YOU ARE HERE**
 * [Online crisprHAL prediction tool](https://crisprhal.streamlit.app/) ([Repository](https://github.com/tbrowne5/crisprHAL_streamlit))
 * [crisprHAL 2.0 paper repository](https://github.com/tbrowne5/Better-data-for-better-predictions-data-curation-improves-deep-learning-for-sgRNA-Cas9-prediction/)
 * [crisprHAL 2.0 pre-print](https://www.biorxiv.org/content/10.1101/2025.06.24.661356v1.full)
