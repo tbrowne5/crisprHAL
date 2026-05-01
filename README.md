@@ -10,11 +10,11 @@ The up-to-date models for bacterial SpCas9, TevSpCas9, eSpCas9, and SaCas9 nucle
 * [Online crisprHAL prediction tool V2](https://crisprhal2.streamlit.app/) ([Repository](https://github.com/tbrowne5/crisprHAL_streamlit_v2))
 * [Online crisprHAL prediction tool V1](https://crisprhal.streamlit.app/) ([Repository](https://github.com/tbrowne5/crisprHAL_streamlit))
 * [crisprHAL 2.0 SpCas9 paper repository](https://github.com/tbrowne5/Better-data-for-better-predictions-data-curation-improves-deep-learning-for-sgRNA-Cas9-prediction/)
-* [crisprHAL 2.0 SpCas9 publication](https://doi.org/10.7717/peerj.20706): "Better data for better predictions..." *PeerJ* (2026).
+* [crisprHAL 2.0 SpCas9 publication](https://doi.org/10.7717/peerj.20706), *PeerJ* (2026).
 * [crisprHAL SaCas9 paper repository](https://github.com/tbrowne5/Adenine-methylated-PAM-sequences-inhibit-SaCas9-activity)
-* [crisprHAL SaCas9 publication](https://doi.org/10.1093/nar/gkaf1520): "Machine learning reveals..." *Nucleic Acids Research* (2026).
+* [crisprHAL SaCas9 publication](https://doi.org/10.1093/nar/gkaf1520), *Nucleic Acids Research* (2026).
 * [crisprHAL SpCas9 paper repository](https://github.com/tbrowne5/A-generalizable-Cas9-sgRNA-prediction-model-using-machine-transfer-learning)
-* [crisprHAL SpCas9 publication](https://doi.org/10.1038/s41467-023-41143-7): "A generalizable Cas9 sgRNA prediction model..." *Nature Communications* (2023).
+* [crisprHAL SpCas9 publication](https://doi.org/10.1038/s41467-023-41143-7), *Nature Communications* (2023).
 
 ## Available Prediction Models:
 
