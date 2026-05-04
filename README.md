@@ -16,6 +16,22 @@ The up-to-date models for bacterial SpCas9, TevSpCas9, eSpCas9, and SaCas9 nucle
 * [crisprHAL SpCas9 paper repository](https://github.com/tbrowne5/A-generalizable-Cas9-sgRNA-prediction-model-using-machine-transfer-learning)
 * [crisprHAL SpCas9 publication, *Nature Communications*](https://doi.org/10.1038/s41467-023-41143-7)
 
+<details>
+<summary>Click to view citations</summary>
+
+<br>
+
+1. **PeerJ (2024)**  
+   https://doi.org/10.7717/peerj.20706  
+
+2. **Nucleic Acids Research (2025)**  
+   https://doi.org/10.1093/nar/gkaf1520  
+
+3. **Nature Communications (2023)**  
+   https://doi.org/10.1038/s41467-023-41143-7  
+
+</details>
+
 ## Available Prediction Models:
 
 * SpCas9: ```-m SpCas9``` for SpCas9 and TevSpCas9 activity prediction
