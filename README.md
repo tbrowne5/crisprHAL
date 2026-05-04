@@ -219,8 +219,14 @@ NCBI SRA BioProject: PRJNA450978
 
 ## 8: How to cite crisprHAL
 
-Browne, T. S., et. al. (2026). Better data for better predictions: data curation improves deep learning for sgRNA/Cas9 prediction. *PeerJ*. [https://doi.org/10.7717/peerj.20706]
+#### crisprHAL SpCas9 2.0 citation:
 
-Ham, D. T., Browne, T. S., et al. (2026). Machine learning reveals sequence and methylation determinants of SaCas9-PAM interactions in bacteria. *Nucleic Acids Research, 54*(2). [https://doi.org/10.1093/nar/gkaf1520]
+Browne, T. S., et. al. (2026). Better data for better predictions: data curation improves deep learning for sgRNA/Cas9 prediction. *PeerJ*. https://doi.org/10.7717/peerj.20706
 
-Ham, D. T., Browne, T. S., et al. (2023). A generalizable Cas9/sgRNA prediction model using machine transfer learning with small high-quality datasets. *Nature Communications, 14*(1). [https://doi.org/10.1038/s41467-023-41143-7]
+#### crisprHAL SaCas9 citation:
+
+Ham, D. T., Browne, T. S., et al. (2026). Machine learning reveals sequence and methylation determinants of SaCas9-PAM interactions in bacteria. *Nucleic Acids Research, 54*(2). https://doi.org/10.1093/nar/gkaf1520
+
+#### crisprHAL SpCas9 1.0 citation:
+
+Ham, D. T., Browne, T. S., et al. (2023). A generalizable Cas9/sgRNA prediction model using machine transfer learning with small high-quality datasets. *Nature Communications, 14*(1). https://doi.org/10.1038/s41467-023-41143-7
