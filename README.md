@@ -33,9 +33,9 @@ Ham, D. T., Browne, T. S., et al. (2026). Machine learning reveals sequence and 
 
 Ham, D. T., Browne, T. S., et al. (2023). A generalizable Cas9/sgRNA prediction model using machine transfer learning with small high-quality datasets. *Nature Communications, 14*(1). https://doi.org/10.1038/s41467-023-41143-7
 
----
-
 </details>
+
+---
 
 ## Available Prediction Models:
 
